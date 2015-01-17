@@ -1,0 +1,74 @@
+## @file
+# The DXE driver produces HII protocols defined in UEFI HII 2.1 specificatin.
+#
+# Copyright (c) 2007 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials       
+#  are licensed and made available under the terms and conditions of the BSD License   
+#  which accompanies this distribution. The full text of the license may be found at  
+#  http://opensource.org/licenses/bsd-license.php           
+#  
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,      
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = fplayer
+  FILE_GUID                      = 348C4D62-BFBD-4882-9ECE-C80BBcccc736
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = UEFI_APPLICATION 
+  ENTRY_POINT                    = ShellCEntryLib 
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+   VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  #uefientry.c 
+  fplayer.c 
+[Packages.common.DXE_DRIVER]
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ffmpeg/ffmpeg.dec
+  StdLib/StdLib.dec
+
+
+[LibraryClasses]
+  libavcodec
+  libavutil
+  libswscale
+  libavformat
+  LibC
+  LibStdio
+[Protocols]
+[FeaturePcd]
+
+[Pcd]
+
+[Guids]  
+  gEfiGlobalVariableGuid  ## SOMETIMES_CONSUMES ## Variable:"PlatformLang"
+  ##
+  # Event registered to EFI_HII_SET_KEYBOARD_LAYOUT_EVENT_GUID group,
+  # which will be triggered by EFI_HII_DATABASE_PROTOCOL.SetKeyboardLayout().
+  ##
+
+[BuildOptions]
+#   GCC:*_*_IA32_DLINK_FLAGS == -o "$(BIN_DIR)/SecMain" -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 /usr/lib/crt1.o /usr/lib/crti.o -L/usr/X11R6/lib -lXext -lX11 /usr/lib/crtn.o
+#   GCC:*_*_*_DLINK2_FLAGS == -lc
+   GCC:*_*_IA32_CC_FLAGS = -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 
+#   GCC:*_*_IA32_PP_FLAGS == -m32 -E -x assembler-with-cpp -include AutoGen.h
+#   GCC:*_*_IA32_ASM_FLAGS == -m32 -c -x assembler -imacros AutoGen.h
+
+#   GCC:*_*_X64_DLINK_FLAGS == -o "$(BIN_DIR)/SecMain" -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 /usr/lib/crt1.o /usr/lib/crti.o -L/usr/X11R6/lib -lXext -lX11 /usr/lib/crtn.o
+#   GCC:*_*_X64_CC_FLAGS == -m64 -g -fshort-wchar -fno-strict-aliasing -Wall -malign-double -idirafter/usr/include -c -include AutoGen.h
+#   GCC:*_*_X64_PP_FLAGS == -m64 -E -x assembler-with-cpp -include AutoGen.h
+#   GCC:*_*_X64_ASM_FLAGS == -m64 -c -x assembler -imacros AutoGen.h
+
+
+

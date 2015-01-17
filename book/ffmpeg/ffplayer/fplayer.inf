@@ -1,0 +1,52 @@
+## @file
+#   A simple, basic, application showing how the Hello application could be
+#   built using the "Standard C Libraries" from StdLib.
+#
+#  Copyright (c) 2010 - 2011, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = ffplayer 
+  FILE_GUID                      = 4ea97c46-7491-4dfd-b442-74798713ce5f
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 0.1
+  ENTRY_POINT                    = ShellCEntryLib
+  
+  DEFINE UEFI_BOOK_DIR            = uefi\book
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF
+#
+
+[Sources]
+  fplayer.cpp 
+
+[Packages]
+  StdLib/StdLib.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ShellPkg/ShellPkg.dec
+  $(UEFI_BOOK_DIR)/CppPkg/CppPkg.dec
+  $(UEFI_BOOK_DIR)/GUIPkg/GUIPkg.dec
+
+[LibraryClasses]
+  ShellCEntryLib
+  LibC
+  LibGui
+  LibCpp
+
+[Protocols]
+  gEfiGraphicsOutputProtocolGuid
+  gEfiSimplePointerProtocolGuid
+  gEfiSimpleTextInputExProtocolGuid
+[BuildOptions]
+   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4201 
+

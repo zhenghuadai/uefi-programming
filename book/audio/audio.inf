@@ -1,0 +1,40 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = ac97 
+  FILE_GUID                      = 6987936E-ED34-44db-AE97-1FA5E4ED2117
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeACC 
+#  ENTRY_POINT                    = UefiMain
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]  
+  accdriver.c
+  ac97.c
+  ComponentName.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiLib
+  UefiBootServicesTableLib
+
+[Protocols]
+  gEfiDriverBindingProtocolGuid
+  gEfiComponentNameProtocolGuid    
+  gEfiPciIoProtocolGuid
+
+
+[BuildOptions]
+ MSFT:DEBUG_*_*_CC_FLAGS   = /wd4201  /wd4305
+ MSFT:RELEASE_*_*_CC_FLAGS = /wd4201 

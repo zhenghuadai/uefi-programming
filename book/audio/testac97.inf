@@ -1,0 +1,75 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = testac
+  FILE_GUID                      = 6987936E-ED34-44db-AE97-1FA5E4ED2117
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = ShellCEntryLib 
+  #ENTRY_POINT                    = UefiMain
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]  
+  testac97.c
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+  StdLib/StdLib.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  LibC
+  ShellCEntryLib
+  PcdLib
+  DebugLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  ShellLib
+
+
+[Protocols]
+  gEfiUnicodeCollation2ProtocolGuid                       # ALWAYS_CONSUMED
+  gEfiShellProtocolGuid                                   # ALWAYS_CONSUMED
+  gEfiShellParametersProtocolGuid                         # ALWAYS_CONSUMED
+  gEfiDevicePathProtocolGuid                              # ALWAYS_CONSUMED
+  gEfiLoadedImageProtocolGuid                             # ALWAYS_CONSUMED
+  gEfiSimpleFileSystemProtocolGuid                        # ALWAYS_CONSUMED
+  gEfiDevicePathToTextProtocolGuid                        # ALWAYS_CONSUMED
+  gEfiHiiConfigAccessProtocolGuid
+  gEfiPlatformDriverOverrideProtocolGuid
+  gEfiBlockIoProtocolGuid                                 ## TO_START
+  gEfiDriverBindingProtocolGuid
+  gEfiComponentNameProtocolGuid    
+  gEfiDiskIoProtocolGuid
+  gEfiPciIoProtocolGuid
+
+[FeaturePcd]
+
+[Pcd.common]
+  gEfiShellPkgTokenSpaceGuid.PcdShellSupportLevel         # ALWAYS_CONSUMED
+  gEfiShellPkgTokenSpaceGuid.PcdShellFileOperationSize    # ALWAYS_CONSUMED
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLangCodes
+  
+[Guids]
+  gEfiFileSystemInfoGuid
+  gEfiFileInfoGuid
+
+[BuildOptions]
+ MSFT:DEBUG_*_*_CC_FLAGS   = /wd4201   /Od #/wd4305 /wd4804 /Zc:wchar_t- 
+ MSFT:RELEASE_*_*_CC_FLAGS = /wd4201 
+   #GCC:*_*_IA32_CC_FLAGS = -DHAVE_FFMPEG_HEADER -DARCH_X86_32=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w -fshort-wchar
+
+   #GCC:*_*_X64_CC_FLAGS = -DHAVE_FFMPEG_HEADER -DARCH_X86_64=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -Wno-sign-conversion -w -fshort-wchar

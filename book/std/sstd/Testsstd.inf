@@ -1,0 +1,33 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = testsstd
+  FILE_GUID                      = 6987936E-ED34-54db-AE97-1FA5E4ED2127
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]  
+  Testsstd.c
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  uefi/book/sstdPkg/sstd.dec
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  BaseLib
+  MemoryAllocationLib
+  sstdLib
+
+[Protocols]
+
+[FeaturePcd]
+
+[Pcd.common]
+  
+[Guids]
+
+[BuildOptions]

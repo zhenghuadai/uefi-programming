@@ -1,0 +1,19 @@
+PciRoot(0x0)/Pci(0x4,0x0) 
+UINT16  VendorId :8086 
+UINT16  DeviceId :2415
+UINT16  Command  :7 
+UINT16  Status   :280
+UINT8   RevisionID : 1
+UINT8   ClassCode[2] : 4
+UINT8   ClassCode[1] : 1
+UINT8   ClassCode[0] : 0
+UINT8   CacheLineSize :0
+UINT8   LatencyTimer : 0
+UINT8   HeaderType :   0
+UINT8   BIST :         0
+Bar[0] :  C001      
+Bar[1] :  C401      
+Bar[2] :  0  
+Bar[3] :  0      
+Bar[4] :  0      
+Bar[5] :  0      

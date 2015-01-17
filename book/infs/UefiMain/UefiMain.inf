@@ -1,0 +1,26 @@
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = UefiMain 
+  FILE_GUID                      = 4ea97c46-7491-4dfd-b442-747010f3ce5f
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 0.1
+  ENTRY_POINT                    = UefiMain 
+[Sources]
+  UefiMain.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]   
+  UefiApplicationEntryPoint
+  UefiLib
+[FixedPcd]
+gEfiMdePkgTokenSpaceGuid.PcdFSBClock|600000000
+gEfiMdePkgTokenSpaceGuid.PcdMaximumUnicodeStringLength
+[FeaturePcd]
+gEfiMdePkgTokenSpaceGuid.PcdComponentNameDisable|FALSE
+gEfiMdePkgTokenSpaceGuid.PcdDriverDiagnosticsDisable
+[PatchPcd]
+gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultLangCodes
+[BuildOptions]  
+MSFT:DEBUG_*_IA32_CC_FLAGS = /Od

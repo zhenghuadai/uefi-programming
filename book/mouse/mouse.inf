@@ -1,0 +1,60 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = mouse 
+  FILE_GUID                      = 6987936E-ED34-44db-AE97-1FA5E4ED2117
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]  
+  mouse.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ShellPkg/ShellPkg.dec
+  
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  PcdLib
+  DebugLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  ShellLib
+
+[Protocols]
+  gEfiUnicodeCollation2ProtocolGuid                       # ALWAYS_CONSUMED
+  gEfiShellProtocolGuid                                   # ALWAYS_CONSUMED
+  gEfiShellParametersProtocolGuid                         # ALWAYS_CONSUMED
+  gEfiDevicePathProtocolGuid                              # ALWAYS_CONSUMED
+  gEfiLoadedImageProtocolGuid                             # ALWAYS_CONSUMED
+  gEfiSimpleFileSystemProtocolGuid                        # ALWAYS_CONSUMED
+  gEfiDevicePathToTextProtocolGuid                        # ALWAYS_CONSUMED
+  gEfiHiiConfigAccessProtocolGuid
+  gEfiPlatformDriverOverrideProtocolGuid
+  gEfiBlockIoProtocolGuid                                 ## TO_START
+  gEfiDriverBindingProtocolGuid
+  gEfiComponentNameProtocolGuid    
+  gEfiDiskIoProtocolGuid
+  gEfiPciIoProtocolGuid
+  gEfiSimplePointerProtocolGuid
+
+[FeaturePcd]
+
+[Pcd.common]
+  gEfiShellPkgTokenSpaceGuid.PcdShellSupportLevel         # ALWAYS_CONSUMED
+  gEfiShellPkgTokenSpaceGuid.PcdShellFileOperationSize    # ALWAYS_CONSUMED
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLangCodes
+  
+[Guids]
+  gEfiFileSystemInfoGuid
+  gEfiFileInfoGuid
+
+[BuildOptions]  

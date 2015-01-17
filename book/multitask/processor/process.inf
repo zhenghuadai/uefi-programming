@@ -1,0 +1,47 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = process 
+  FILE_GUID                      = 6987936E-ED34-44db-AE97-1FA5E4ED2119
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]  
+  process.c
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  PcdLib
+  DebugLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+
+[Protocols]
+  gEfiUnicodeCollation2ProtocolGuid                       # ALWAYS_CONSUMED
+  gEfiLoadedImageProtocolGuid                             # ALWAYS_CONSUMED
+  gEfiMpServiceProtocolGuid
+
+[FeaturePcd]
+
+[Pcd.common]
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLangCodes
+  
+[Guids]
+
+[BuildOptions]

@@ -1,0 +1,45 @@
+## @file
+#   A simple, basic, application showing how the Hello application could be
+#   built using the "Standard C Libraries" from StdLib.
+#
+#  Copyright (c) 2010 - 2011, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = testgcpp
+  FILE_GUID                      = 4ea97c46-7491-4dfd-b442-74798713ce5f
+  VERSION_STRING                 = 0.1
+  MODULE_TYPE                    = UEFI_APPLICATION
+  ENTRY_POINT                    = ShellCEntryLib
+
+[Sources]
+  #crtend.c
+  testcpp.cpp
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(UEFI_BOOK_DIR)/GcppPkg/GcppPkg.dec
+  StdLib/StdLib.dec
+
+[LibraryClasses]
+  GcppLib
+  ShellCEntryLib
+  PrintLib
+  LibC
+  LibStdio
+
+[Protocols]
+
+[BuildOptions]
+   GCC:*_*_IA32_CC_FLAGS =  
+   MSFT:*_*_*_CC_FLAGS = 
+

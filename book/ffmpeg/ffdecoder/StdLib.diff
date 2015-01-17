@@ -1,0 +1,480 @@
+Index: Include/strings.h
+===================================================================
+--- Include/strings.h	(revision 13087)
++++ Include/strings.h	(working copy)
+@@ -44,7 +44,7 @@
+ #include <sys/featuretest.h>
+ 
+ __BEGIN_DECLS
+-void    bzero(void *, size_t);
++void    bzero(void *, unsigned long);
+ int     ffs(int);
+ __END_DECLS
+ 
+Index: Include/inttypes.h
+===================================================================
+--- Include/inttypes.h	(revision 13087)
++++ Include/inttypes.h	(working copy)
+@@ -60,4 +60,230 @@
+         wchar_t ** __restrict, int);
+ __END_DECLS
+ 
++#if !defined __cplusplus || defined __STDC_FORMAT_MACROS
++# if __WORDSIZE == 64
++#  define __PRI64_PREFIX	"l"
++#  define __PRIPTR_PREFIX	"l"
++# else
++#  define __PRI64_PREFIX	"ll"
++#  define __PRIPTR_PREFIX
++# endif
++
++/* Macros for printing format specifiers.  */
++
++/* Decimal notation.  */
++# define PRId8		"d"
++# define PRId16		"d"
++# define PRId32		"d"
++# define PRId64		__PRI64_PREFIX "d"
++
++# define PRIdLEAST8	"d"
++# define PRIdLEAST16	"d"
++# define PRIdLEAST32	"d"
++# define PRIdLEAST64	__PRI64_PREFIX "d"
++
++# define PRIdFAST8	"d"
++# define PRIdFAST16	__PRIPTR_PREFIX "d"
++# define PRIdFAST32	__PRIPTR_PREFIX "d"
++# define PRIdFAST64	__PRI64_PREFIX "d"
++
++
++# define PRIi8		"i"
++# define PRIi16		"i"
++# define PRIi32		"i"
++# define PRIi64		__PRI64_PREFIX "i"
++
++# define PRIiLEAST8	"i"
++# define PRIiLEAST16	"i"
++# define PRIiLEAST32	"i"
++# define PRIiLEAST64	__PRI64_PREFIX "i"
++
++# define PRIiFAST8	"i"
++# define PRIiFAST16	__PRIPTR_PREFIX "i"
++# define PRIiFAST32	__PRIPTR_PREFIX "i"
++# define PRIiFAST64	__PRI64_PREFIX "i"
++
++/* Octal notation.  */
++# define PRIo8		"o"
++# define PRIo16		"o"
++# define PRIo32		"o"
++# define PRIo64		__PRI64_PREFIX "o"
++
++# define PRIoLEAST8	"o"
++# define PRIoLEAST16	"o"
++# define PRIoLEAST32	"o"
++# define PRIoLEAST64	__PRI64_PREFIX "o"
++
++# define PRIoFAST8	"o"
++# define PRIoFAST16	__PRIPTR_PREFIX "o"
++# define PRIoFAST32	__PRIPTR_PREFIX "o"
++# define PRIoFAST64	__PRI64_PREFIX "o"
++
++/* Unsigned integers.  */
++# define PRIu8		"u"
++# define PRIu16		"u"
++# define PRIu32		"u"
++# define PRIu64		__PRI64_PREFIX "u"
++
++# define PRIuLEAST8	"u"
++# define PRIuLEAST16	"u"
++# define PRIuLEAST32	"u"
++# define PRIuLEAST64	__PRI64_PREFIX "u"
++
++# define PRIuFAST8	"u"
++# define PRIuFAST16	__PRIPTR_PREFIX "u"
++# define PRIuFAST32	__PRIPTR_PREFIX "u"
++# define PRIuFAST64	__PRI64_PREFIX "u"
++
++/* lowercase hexadecimal notation.  */
++# define PRIx8		"x"
++# define PRIx16		"x"
++# define PRIx32		"x"
++# define PRIx64		__PRI64_PREFIX "x"
++
++# define PRIxLEAST8	"x"
++# define PRIxLEAST16	"x"
++# define PRIxLEAST32	"x"
++# define PRIxLEAST64	__PRI64_PREFIX "x"
++
++# define PRIxFAST8	"x"
++# define PRIxFAST16	__PRIPTR_PREFIX "x"
++# define PRIxFAST32	__PRIPTR_PREFIX "x"
++# define PRIxFAST64	__PRI64_PREFIX "x"
++
++/* UPPERCASE hexadecimal notation.  */
++# define PRIX8		"X"
++# define PRIX16		"X"
++# define PRIX32		"X"
++# define PRIX64		__PRI64_PREFIX "X"
++
++# define PRIXLEAST8	"X"
++# define PRIXLEAST16	"X"
++# define PRIXLEAST32	"X"
++# define PRIXLEAST64	__PRI64_PREFIX "X"
++
++# define PRIXFAST8	"X"
++# define PRIXFAST16	__PRIPTR_PREFIX "X"
++# define PRIXFAST32	__PRIPTR_PREFIX "X"
++# define PRIXFAST64	__PRI64_PREFIX "X"
++
++
++/* Macros for printing `intmax_t' and `uintmax_t'.  */
++# define PRIdMAX	__PRI64_PREFIX "d"
++# define PRIiMAX	__PRI64_PREFIX "i"
++# define PRIoMAX	__PRI64_PREFIX "o"
++# define PRIuMAX	__PRI64_PREFIX "u"
++# define PRIxMAX	__PRI64_PREFIX "x"
++# define PRIXMAX	__PRI64_PREFIX "X"
++
++
++/* Macros for printing `intptr_t' and `uintptr_t'.  */
++# define PRIdPTR	__PRIPTR_PREFIX "d"
++# define PRIiPTR	__PRIPTR_PREFIX "i"
++# define PRIoPTR	__PRIPTR_PREFIX "o"
++# define PRIuPTR	__PRIPTR_PREFIX "u"
++# define PRIxPTR	__PRIPTR_PREFIX "x"
++# define PRIXPTR	__PRIPTR_PREFIX "X"
++
++
++/* Macros for scanning format specifiers.  */
++
++/* Signed decimal notation.  */
++# define SCNd8		"hhd"
++# define SCNd16		"hd"
++# define SCNd32		"d"
++# define SCNd64		__PRI64_PREFIX "d"
++
++# define SCNdLEAST8	"hhd"
++# define SCNdLEAST16	"hd"
++# define SCNdLEAST32	"d"
++# define SCNdLEAST64	__PRI64_PREFIX "d"
++
++# define SCNdFAST8	"hhd"
++# define SCNdFAST16	__PRIPTR_PREFIX "d"
++# define SCNdFAST32	__PRIPTR_PREFIX "d"
++# define SCNdFAST64	__PRI64_PREFIX "d"
++
++/* Signed decimal notation.  */
++# define SCNi8		"hhi"
++# define SCNi16		"hi"
++# define SCNi32		"i"
++# define SCNi64		__PRI64_PREFIX "i"
++
++# define SCNiLEAST8	"hhi"
++# define SCNiLEAST16	"hi"
++# define SCNiLEAST32	"i"
++# define SCNiLEAST64	__PRI64_PREFIX "i"
++
++# define SCNiFAST8	"hhi"
++# define SCNiFAST16	__PRIPTR_PREFIX "i"
++# define SCNiFAST32	__PRIPTR_PREFIX "i"
++# define SCNiFAST64	__PRI64_PREFIX "i"
++
++/* Unsigned decimal notation.  */
++# define SCNu8		"hhu"
++# define SCNu16		"hu"
++# define SCNu32		"u"
++# define SCNu64		__PRI64_PREFIX "u"
++
++# define SCNuLEAST8	"hhu"
++# define SCNuLEAST16	"hu"
++# define SCNuLEAST32	"u"
++# define SCNuLEAST64	__PRI64_PREFIX "u"
++
++# define SCNuFAST8	"hhu"
++# define SCNuFAST16	__PRIPTR_PREFIX "u"
++# define SCNuFAST32	__PRIPTR_PREFIX "u"
++# define SCNuFAST64	__PRI64_PREFIX "u"
++
++/* Octal notation.  */
++# define SCNo8		"hho"
++# define SCNo16		"ho"
++# define SCNo32		"o"
++# define SCNo64		__PRI64_PREFIX "o"
++
++# define SCNoLEAST8	"hho"
++# define SCNoLEAST16	"ho"
++# define SCNoLEAST32	"o"
++# define SCNoLEAST64	__PRI64_PREFIX "o"
++
++# define SCNoFAST8	"hho"
++# define SCNoFAST16	__PRIPTR_PREFIX "o"
++# define SCNoFAST32	__PRIPTR_PREFIX "o"
++# define SCNoFAST64	__PRI64_PREFIX "o"
++
++/* Hexadecimal notation.  */
++# define SCNx8		"hhx"
++# define SCNx16		"hx"
++# define SCNx32		"x"
++# define SCNx64		__PRI64_PREFIX "x"
++
++# define SCNxLEAST8	"hhx"
++# define SCNxLEAST16	"hx"
++# define SCNxLEAST32	"x"
++# define SCNxLEAST64	__PRI64_PREFIX "x"
++
++# define SCNxFAST8	"hhx"
++# define SCNxFAST16	__PRIPTR_PREFIX "x"
++# define SCNxFAST32	__PRIPTR_PREFIX "x"
++# define SCNxFAST64	__PRI64_PREFIX "x"
++
++
++/* Macros for scanning `intmax_t' and `uintmax_t'.  */
++# define SCNdMAX	__PRI64_PREFIX "d"
++# define SCNiMAX	__PRI64_PREFIX "i"
++# define SCNoMAX	__PRI64_PREFIX "o"
++# define SCNuMAX	__PRI64_PREFIX "u"
++# define SCNxMAX	__PRI64_PREFIX "x"
++
++/* Macros for scaning `intptr_t' and `uintptr_t'.  */
++# define SCNdPTR	__PRIPTR_PREFIX "d"
++# define SCNiPTR	__PRIPTR_PREFIX "i"
++# define SCNoPTR	__PRIPTR_PREFIX "o"
++# define SCNuPTR	__PRIPTR_PREFIX "u"
++# define SCNxPTR	__PRIPTR_PREFIX "x"
++
++#endif	/* C++ && format macros */
++
++
+ #endif /* !_INTTYPES_H_ */
+Index: Include/sys/socket.h
+===================================================================
+--- Include/sys/socket.h	(revision 13087)
++++ Include/sys/socket.h	(working copy)
+@@ -239,6 +239,14 @@
+   __int64_t     __ss_align;/* force desired structure storage alignment */
+   char    __ss_pad2[_SS_PAD2SIZE];
+ };
++#else
++struct sockaddr_storage {
++  __uint8_t ss_len;   /* address length */
++  sa_family_t ss_family;  /* address family */
++  char    __ss_pad1[_SS_PAD1SIZE];
++  __int64_t     __ss_align;/* force desired structure storage alignment */
++  char    __ss_pad2[_SS_PAD2SIZE];
++};
+ #endif /* _XOPEN_SOURCE >= 500 || _NETBSD_SOURCE */
+ #endif /* 1 */
+ 
+Index: LibC/StdLib/StdLib.inf
+===================================================================
+--- LibC/StdLib/StdLib.inf	(revision 13087)
++++ LibC/StdLib/StdLib.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibStdLib
+   FILE_GUID                      = f8a312f8-bccc-479f-b49b-ce129568b06a
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibStdLib
+ 
+Index: LibC/Stdio/Stdio.inf
+===================================================================
+--- LibC/Stdio/Stdio.inf	(revision 13087)
++++ LibC/Stdio/Stdio.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibStdio
+   FILE_GUID                      = 7d2bd134-500d-4f42-aee2-26accfb6cb1d
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibStdio
+ 
+Index: LibC/Ctype/Ctype.inf
+===================================================================
+--- LibC/Ctype/Ctype.inf	(revision 13087)
++++ LibC/Ctype/Ctype.inf	(working copy)
+@@ -20,7 +20,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibCtype
+   FILE_GUID                      = dcc64575-fa7d-4b7b-b1ad-48427c97c74d
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibCtype
+ 
+Index: LibC/NetUtil/NetUtil.inf
+===================================================================
+--- LibC/NetUtil/NetUtil.inf	(revision 13087)
++++ LibC/NetUtil/NetUtil.inf	(working copy)
+@@ -18,7 +18,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibNetUtil
+   FILE_GUID                      = f3c9667b-c50c-4e9c-a1f1-78c3b1ddf2c2
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibNetUtil
+ 
+Index: LibC/LibC.inf
+===================================================================
+--- LibC/LibC.inf	(revision 13087)
++++ LibC/LibC.inf	(working copy)
+@@ -18,7 +18,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibC
+   FILE_GUID                      = 695bec93-82ae-4c17-bdad-7f184f4e651d
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibC
+ 
+@@ -95,7 +96,7 @@
+   ShellPkg/ShellPkg.dec
+ 
+ [LibraryClasses]
+-  ShellCEntryLib
++  #ShellCEntryLib
+   UefiLib
+   BaseLib
+   BaseMemoryLib
+Index: LibC/Uefi/Devices/daUtility.inf
+===================================================================
+--- LibC/Uefi/Devices/daUtility.inf	(revision 13087)
++++ LibC/Uefi/Devices/daUtility.inf	(working copy)
+@@ -16,7 +16,8 @@
+   INF_VERSION                   = 0x00010005
+   BASE_NAME                     = DevUtility
+   FILE_GUID                     = d6a9928c-3397-4dd1-818f-c664ba6dcaaf
+-  MODULE_TYPE                   = UEFI_APPLICATION
++  #MODULE_TYPE                   = UEFI_APPLICATION
++  MODULE_TYPE                   = BASE 
+   VERSION_STRING                = 1.0
+   LIBRARY_CLASS                 = DevUtility
+ 
+Index: LibC/Uefi/Uefi.inf
+===================================================================
+--- LibC/Uefi/Uefi.inf	(revision 13087)
++++ LibC/Uefi/Uefi.inf	(working copy)
+@@ -18,6 +18,7 @@
+   BASE_NAME                      = LibUefi
+   FILE_GUID                      = 1dcff17c-aa53-4b78-b234-864027555035
+   MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibUefi
+   LIBRARY_DESTRUCTOR            = DestructMePlease
+Index: LibC/Math/Math.inf
+===================================================================
+--- LibC/Math/Math.inf	(revision 13087)
++++ LibC/Math/Math.inf	(working copy)
+@@ -17,7 +17,7 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibMath
+   FILE_GUID                      = a9dc6f60-f861-47d1-8751-ecaae7d27291
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE #UEFI_APPLICATION
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibMath
+ 
+Index: LibC/Time/Time.inf
+===================================================================
+--- LibC/Time/Time.inf	(revision 13087)
++++ LibC/Time/Time.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibTime
+   FILE_GUID                      = c5847038-ff75-4074-9e4c-c36a2eb398a5
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibTime
+ 
+Index: LibC/gdtoa/gdtoa.inf
+===================================================================
+--- LibC/gdtoa/gdtoa.inf	(revision 13087)
++++ LibC/gdtoa/gdtoa.inf	(working copy)
+@@ -20,7 +20,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibGdtoa
+   FILE_GUID                      = 5c98de6e-cb69-465f-b6b9-f661e26e6f9d
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibGdtoa
+ 
+Index: LibC/Locale/Locale.inf
+===================================================================
+--- LibC/Locale/Locale.inf	(revision 13087)
++++ LibC/Locale/Locale.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibLocale
+   FILE_GUID                      = 9205cde5-5ae5-4a4b-bfbf-f6211967eef9
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibLocale
+ 
+Index: LibC/Wchar/Wchar.inf
+===================================================================
+--- LibC/Wchar/Wchar.inf	(revision 13087)
++++ LibC/Wchar/Wchar.inf	(working copy)
+@@ -18,6 +18,7 @@
+   BASE_NAME                     = LibWchar
+   FILE_GUID                     = 42c078ef-14a8-4e30-9329-6f12d796e54a
+   MODULE_TYPE                   = UEFI_APPLICATION
++  #MODULE_TYPE                    = BASE 
+   VERSION_STRING                = 1.0
+   LIBRARY_CLASS                 = LibWchar
+   CONSTRUCTOR                   = __wchar_construct
+Index: LibC/String/String.inf
+===================================================================
+--- LibC/String/String.inf	(revision 13087)
++++ LibC/String/String.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibString
+   FILE_GUID                      = caee2f3b-3191-4da0-ad10-a5c07e636cd1
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibString
+ 
+Index: LibC/Signal/Signal.inf
+===================================================================
+--- LibC/Signal/Signal.inf	(revision 13087)
++++ LibC/Signal/Signal.inf	(working copy)
+@@ -17,7 +17,8 @@
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = LibSignal
+   FILE_GUID                      = 00c86db8-013b-4ff4-b8e9-208f4fcf1c00
+-  MODULE_TYPE                    = UEFI_APPLICATION
++  #MODULE_TYPE                    = UEFI_APPLICATION
++  MODULE_TYPE                    = BASE 
+   VERSION_STRING                 = 1.0
+   LIBRARY_CLASS                  = LibSignal
+ 
+Index: StdLib.inc
+===================================================================
+--- StdLib.inc	(revision 13087)
++++ StdLib.inc	(working copy)
+@@ -24,7 +24,7 @@
+   EfiSocketLib|StdLib/EfiSocketLib/EfiSocketLib.inf
+   UseSocketDxe|StdLib/UseSocketDxe/UseSocketDxe.inf
+ 
+-[LibraryClasses.Common.UEFI_APPLICATION]
++[LibraryClasses.Common.UEFI_APPLICATION, LibraryClasses.common.UEFI_DRIVER]
+   #
+   # C Standard Libraries
+   #

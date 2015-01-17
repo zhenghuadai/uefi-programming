@@ -1,0 +1,289 @@
+diff --git a/common.mak b/common.mak
+index 25a5d81..21cf72c 100644
+--- a/common.mak
++++ b/common.mak
+@@ -38,6 +38,7 @@ CFLAGS   += $(ECFLAGS)
+ 
+ %.o: %.c
+ 	$(CCDEP)
++	echo $(CC) $(CPPFLAGS) $(CFLAGS) $(CC_DEPFLAGS) -c $(CC_O) $<
+ 	$(CC) $(CPPFLAGS) $(CFLAGS) $(CC_DEPFLAGS) -c $(CC_O) $<
+ 
+ %.o: %.S
+diff --git a/libavcodec/aacenc.c b/libavcodec/aacenc.c
+index ff68f84..b49155d 100644
+--- a/libavcodec/aacenc.c
++++ b/libavcodec/aacenc.c
+@@ -503,7 +503,7 @@ static int aac_encode_frame(AVCodecContext *avctx,
+             for (i = 0; i < chan_map[0]; i++) {
+                 tag = chan_map[i+1];
+                 chans = tag == TYPE_CPE ? 2 : 1;
+-                ff_psy_preprocess(s->psypp, (uint16_t*)data + start_ch,
++                ff_psy_preprocess(s->psypp, (const int16_t*)((uint16_t*)data + start_ch),
+                                   samples2 + start_ch, start_ch, chans);
+                 start_ch += chans;
+             }
+diff --git a/libavcodec/aacsbr.c b/libavcodec/aacsbr.c
+index 0de81a5..14ae4a8 100644
+--- a/libavcodec/aacsbr.c
++++ b/libavcodec/aacsbr.c
+@@ -38,6 +38,7 @@
+ #define ENVELOPE_ADJUSTMENT_OFFSET 2
+ #define NOISE_FLOOR_OFFSET 6.0f
+ 
++#define _const 
+ /**
+  * SBR VLC tables
+  */
+@@ -1234,7 +1235,7 @@ static void sbr_qmf_synthesis(DSPContext *dsp, FFTContext *mdct,
+     }
+ }
+ 
+-static void autocorrelate(const float x[40][2], float phi[3][2][2], int lag)
++static void autocorrelate(_const float x[40][2], float phi[3][2][2], int lag)
+ {
+     int i;
+     float real_sum = 0.0f;
+@@ -1264,7 +1265,7 @@ static void autocorrelate(const float x[40][2], float phi[3][2][2], int lag)
+  * Warning: This routine does not seem numerically stable.
+  */
+ static void sbr_hf_inverse_filter(float (*alpha0)[2], float (*alpha1)[2],
+-                                  const float X_low[32][40][2], int k0)
++                                  /*  const */float X_low[32][40][2], int k0)
+ {
+     int k;
+     for (k = 0; k < k0; k++) {
+@@ -1340,7 +1341,7 @@ static void sbr_chirp(SpectralBandReplication *sbr, SBRData *ch_data)
+ 
+ /// Generate the subband filtered lowband
+ static int sbr_lf_gen(AACContext *ac, SpectralBandReplication *sbr,
+-                      float X_low[32][40][2], const float W[2][32][32][2])
++                      float X_low[32][40][2], /*  const */float W[2][32][32][2])
+ {
+     int i, k;
+     const int t_HFGen = 8;
+@@ -1363,9 +1364,9 @@ static int sbr_lf_gen(AACContext *ac, SpectralBandReplication *sbr,
+ 
+ /// High Frequency Generator (14496-3 sp04 p215)
+ static int sbr_hf_gen(AACContext *ac, SpectralBandReplication *sbr,
+-                      float X_high[64][40][2], const float X_low[32][40][2],
+-                      const float (*alpha0)[2], const float (*alpha1)[2],
+-                      const float bw_array[5], const uint8_t *t_env,
++                      float X_high[64][40][2], _const float X_low[32][40][2],
++                      _const float (*alpha0)[2], _const float (*alpha1)[2],
++                      _const float bw_array[5], _const uint8_t *t_env,
+                       int bs_num_env)
+ {
+     int i, j, x;
+@@ -1415,7 +1416,7 @@ static int sbr_hf_gen(AACContext *ac, SpectralBandReplication *sbr,
+ 
+ /// Generate the subband filtered lowband
+ static int sbr_x_gen(SpectralBandReplication *sbr, float X[2][32][64],
+-                     const float X_low[32][40][2], const float Y[2][38][64][2],
++                     _const float X_low[32][40][2], _const float Y[2][38][64][2],
+                      int ch)
+ {
+     int k, i;
+@@ -1610,9 +1611,9 @@ static void sbr_gain_calc(AACContext *ac, SpectralBandReplication *sbr,
+ }
+ 
+ /// Assembling HF Signals (14496-3 sp04 p220)
+-static void sbr_hf_assemble(float Y[2][38][64][2], const float X_high[64][40][2],
++static void sbr_hf_assemble(float Y[2][38][64][2], _const float X_high[64][40][2],
+                             SpectralBandReplication *sbr, SBRData *ch_data,
+-                            const int e_a[2])
++                            _const int e_a[2])
+ {
+     int e, i, j, m;
+     const int h_SL = 4 * !sbr->bs_smoothing_mode;
+diff --git a/libavcodec/ac3enc.c b/libavcodec/ac3enc.c
+index e30e1bd..3ea511b 100644
+--- a/libavcodec/ac3enc.c
++++ b/libavcodec/ac3enc.c
+@@ -429,7 +429,7 @@ static void bit_alloc_masking(AC3EncodeContext *s,
+                 memcpy(psd[blk][ch], psd[blk-1][ch], (N/2)*sizeof(int16_t));
+                 memcpy(mask[blk][ch], mask[blk-1][ch], 50*sizeof(int16_t));
+             } else {
+-                ff_ac3_bit_alloc_calc_psd(encoded_exp[blk][ch], 0,
++                ff_ac3_bit_alloc_calc_psd((int8_t*)encoded_exp[blk][ch], 0,
+                                           s->nb_coefs[ch],
+                                           psd[blk][ch], band_psd[blk][ch]);
+                 ff_ac3_bit_alloc_calc_mask(&s->bit_alloc, band_psd[blk][ch],
+diff --git a/libavcodec/acelp_pitch_delay.c b/libavcodec/acelp_pitch_delay.c
+index cddf726..966dd5c 100644
+--- a/libavcodec/acelp_pitch_delay.c
++++ b/libavcodec/acelp_pitch_delay.c
+@@ -115,7 +115,7 @@ int16_t ff_acelp_decode_gain_code(
+            );
+ #else
+     mr_energy = gain_corr_factor * exp(M_LN10 / (20 << 23) * mr_energy) /
+-                sqrt(dsp->scalarproduct_int16(fc_v, fc_v, subframe_size, 0));
++                sqrt(dsp->scalarproduct_int16((int16_t*)fc_v, (int16_t*)fc_v, subframe_size, 0));
+     return mr_energy >> 12;
+ #endif
+ }
+diff --git a/libavcodec/adpcm.c b/libavcodec/adpcm.c
+index 68bd656..b8f53c6 100644
+--- a/libavcodec/adpcm.c
++++ b/libavcodec/adpcm.c
+@@ -686,6 +686,8 @@ static av_cold int adpcm_decode_init(AVCodecContext * avctx)
+     case CODEC_ID_ADPCM_EA_R3:
+         max_channels = 6;
+         break;
++    default:
++        break;
+     }
+     if(avctx->channels > max_channels){
+         return -1;
+@@ -1319,7 +1321,7 @@ static int adpcm_decode_frame(AVCodecContext *avctx,
+ 
+             if ((offset < 0) || (offset >= src_end - src - 4)) break;
+             srcC  = src + offset;
+-            samplesC = samples + channel;
++            samplesC = (uint16_t*)samples + channel;
+ 
+             if (avctx->codec->id == CODEC_ID_ADPCM_EA_R1) {
+                 current_sample  = (int16_t)bytestream_get_le16(&srcC);
+@@ -1591,7 +1593,7 @@ static int adpcm_decode_frame(AVCodecContext *avctx,
+         }
+ 
+         for (ch = 0; ch <= st; ch++) {
+-            samples = (unsigned short *) data + ch;
++            samples = (short *) data + ch;
+ 
+             /* Read in every sample for this channel.  */
+             for (i = 0; i < samplecnt / 14; i++) {
+diff --git a/libavcodec/fft.c b/libavcodec/fft.c
+index bf240bf..5c1b4df 100644
+--- a/libavcodec/fft.c
++++ b/libavcodec/fft.c
+@@ -111,7 +111,7 @@ av_cold int ff_fft_init(FFTContext *s, int nbits, int inverse)
+     s->split_radix = 1;
+ 
+     if (ARCH_ARM)     ff_fft_init_arm(s);
+-    if (HAVE_ALTIVEC) ff_fft_init_altivec(s);
++    //if (HAVE_ALTIVEC) ff_fft_init_altivec(s);
+     if (HAVE_MMX)     ff_fft_init_mmx(s);
+ 
+     if (s->split_radix) {
+diff --git a/libavcodec/h264dsp.c b/libavcodec/h264dsp.c
+index c01fc77..c261711 100644
+--- a/libavcodec/h264dsp.c
++++ b/libavcodec/h264dsp.c
+@@ -315,6 +315,6 @@ void ff_h264dsp_init(H264DSPContext *c)
+     c->h264_loop_filter_strength= NULL;
+ 
+     if (ARCH_ARM) ff_h264dsp_init_arm(c);
+-    if (HAVE_ALTIVEC) ff_h264dsp_init_ppc(c);
++    //if (HAVE_ALTIVEC) ff_h264dsp_init_ppc(c);
+     if (HAVE_MMX) ff_h264dsp_init_x86(c);
+ }
+diff --git a/libavcodec/libavcodec.v b/libavcodec/libavcodec.v
+deleted file mode 100644
+index 561a42c..0000000
+--- a/libavcodec/libavcodec.v
++++ /dev/null
+@@ -1,3 +0,0 @@
+-LIBAVCODEC_$MAJOR {
+-        global: *;
+-};
+diff --git a/libavcodec/x86/mmx.h b/libavcodec/x86/mmx.h
+index d7a76bb..d8d799a 100644
+--- a/libavcodec/x86/mmx.h
++++ b/libavcodec/x86/mmx.h
+@@ -21,7 +21,7 @@
+ #ifndef AVCODEC_X86_MMX_H
+ #define AVCODEC_X86_MMX_H
+ 
+-#warning Everything in this header is deprecated, use plain __asm__()! New code using this header will be rejected.
++//#warning Everything in this header is deprecated, use plain __asm__()! New code using this header will be rejected.
+ 
+ 
+ #define         mmx_i2r(op,imm,reg) \
+diff --git a/libavformat/rtsp.c b/libavformat/rtsp.c
+index fec91f1..45e4e96 100644
+--- a/libavformat/rtsp.c
++++ b/libavformat/rtsp.c
+@@ -1462,7 +1462,8 @@ int ff_rtsp_connect(AVFormatContext *s)
+     RTSPMessageHeader reply1 = {}, *reply = &reply1;
+     int lower_transport_mask = 0;
+     char real_challenge[64];
+-    struct sockaddr_storage peer;
++    // struct sockaddr_storage peer;
++    struct sockaddr peer;
+     socklen_t peer_len = sizeof(peer);
+ 
+     if (!ff_network_init())
+diff --git a/libavutil/mem.c b/libavutil/mem.c
+index 8cad089..4559b06 100644
+--- a/libavutil/mem.c
++++ b/libavutil/mem.c
+@@ -79,10 +79,10 @@ void *av_malloc(unsigned int size)
+     diff= ((-(long)ptr - 1)&15) + 1;
+     ptr = (char*)ptr + diff;
+     ((char*)ptr)[-1]= diff;
+-#elif HAVE_POSIX_MEMALIGN
++#elif HAVE_POSIX_MEMALIGN == 1
+     if (posix_memalign(&ptr,16,size))
+         ptr = NULL;
+-#elif HAVE_MEMALIGN
++#elif HAVE_MEMALIGN == 1
+     ptr = memalign(16,size);
+     /* Why 64?
+        Indeed, we should align it:
+diff --git a/libavutil/random_seed.c b/libavutil/random_seed.c
+index 236cadd..c59363c 100644
+--- a/libavutil/random_seed.c
++++ b/libavutil/random_seed.c
+@@ -18,6 +18,7 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  */
+ 
++#ifndef __UEFI__
+ #include <unistd.h>
+ #include <fcntl.h>
+ #include "timer.h"
+@@ -42,3 +43,12 @@ uint32_t ff_random_get_seed(void)
+     // XXX what to do ?
+     return seed;
+ }
++#else
++#include "timer.h"
++uint32_t ff_random_get_seed(void)
++{
++    uint32_t seed;
++    seed = AV_READ_TIME();
++    return seed;
++}
++#endif
+diff --git a/subdir.mak b/subdir.mak
+index 36a40d3..9edeb2e 100644
+--- a/subdir.mak
++++ b/subdir.mak
+@@ -24,7 +24,9 @@ $(OBJS) $(SUBDIR)%.ho $(SUBDIR)%-test.o $(TESTOBJS): CPPFLAGS += -DHAVE_AV_CONFI
+ 
+ $(SUBDIR)$(LIBNAME): $(OBJS)
+ 	$(RM) $@
++	echo $(AR) rc $@ $^ $(EXTRAOBJS)
+ 	$(AR) rc $@ $^ $(EXTRAOBJS)
++	echo $(RANLIB) $@
+ 	$(RANLIB) $@
+ 
+ install-headers: install-lib$(NAME)-headers install-lib$(NAME)-pkgconfig
+@@ -34,13 +36,16 @@ install-libs-$(CONFIG_SHARED): install-lib$(NAME)-shared
+ 
+ define RULES
+ $(SUBDIR)%$(EXESUF): $(SUBDIR)%.o
++	echo $$(LD) $(FFLDFLAGS) -o $$@ $$^ -l$(FULLNAME) $(FFEXTRALIBS) $$(ELIBS)
+ 	$$(LD) $(FFLDFLAGS) -o $$@ $$^ -l$(FULLNAME) $(FFEXTRALIBS) $$(ELIBS)
+ 
+ $(SUBDIR)$(SLIBNAME): $(SUBDIR)$(SLIBNAME_WITH_MAJOR)
++	echo $(Q)cd ./$(SUBDIR) && $(LN_S) $(SLIBNAME_WITH_MAJOR) $(SLIBNAME)
+ 	$(Q)cd ./$(SUBDIR) && $(LN_S) $(SLIBNAME_WITH_MAJOR) $(SLIBNAME)
+ 
+ $(SUBDIR)$(SLIBNAME_WITH_MAJOR): $(OBJS) $(SUBDIR)lib$(NAME).ver
+ 	$(SLIB_CREATE_DEF_CMD)
++	echo $$(LD) $(SHFLAGS) $(FFLDFLAGS) -o $$@ $$(filter %.o,$$^) $(FFEXTRALIBS) $(EXTRAOBJS)
+ 	$$(LD) $(SHFLAGS) $(FFLDFLAGS) -o $$@ $$(filter %.o,$$^) $(FFEXTRALIBS) $(EXTRAOBJS)
+ 	$(SLIB_EXTRA_CMD)
+ 

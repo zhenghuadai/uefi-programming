@@ -1,0 +1,26 @@
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = ShellExecute 
+  FILE_GUID                    = 4ea97c46-7491-4dfd-b442-747010f3ce5a
+  MODULE_TYPE                   = UEFI_APPLICATION
+  VERSION_STRING               = 0.1
+  ENTRY_POINT                    = ShellCEntryLib
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF
+#
+[Sources]
+  Execute.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+
+[LibraryClasses]   
+  ShellCEntryLib
+  UefiLib
+  ShellLib
+
+[Protocols]
+ gEfiShellProtocolGuid
+[BuildOptions]  
+

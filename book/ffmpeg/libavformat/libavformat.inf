@@ -1,0 +1,353 @@
+## @file
+# The DXE driver produces HII protocols defined in UEFI HII 2.1 specificatin.
+#
+# Copyright (c) 2007 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials       
+#  are licensed and made available under the terms and conditions of the BSD License   
+#  which accompanies this distribution. The full text of the license may be found at  
+#  http://opensource.org/licenses/bsd-license.php           
+#  
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,      
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = libavformat
+  FILE_GUID                      = 348C4D62-BFBD-4882-9ECE-C80BBaaaa736
+  VERSION_STRING                 = 1.0
+  #MODULE_TYPE                    = DXE_DRIVER
+  #ENTRY_POINT                    = InitializeAvFormat
+  MODULE_TYPE                    = BASE 
+  LIBRARY_CLASS                  = libavcodec
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+#uefientry.c
+
+4xm.c
+a64.c
+aacdec.c
+ac3dec.c
+act.c
+adtsenc.c
+adxdec.c
+aea.c
+aiffdec.c
+aiffenc.c
+allformats.c
+amr.c
+anm.c
+apc.c
+ape.c
+apetag.c
+applehttp.c
+applehttpproto.c
+asf.c
+asfcrypt.c
+asfdec.c
+asfenc.c
+assdec.c
+assenc.c
+au.c
+audiointerleave.c
+avc.c
+avidec.c
+avienc.c
+avio.c
+aviobuf.c
+avlanguage.c
+avs.c
+bethsoftvid.c
+bfi.c
+bink.c
+bintext.c
+bit.c
+bmv.c
+c93.c
+cache.c
+caf.c
+cafdec.c
+cafenc.c
+cavsvideodec.c
+cdg.c
+concat.c
+crcenc.c
+crypto.c
+cutils.c
+daud.c
+dfa.c
+diracdec.c
+dnxhddec.c
+dsicin.c
+dtsdec.c
+dv.c
+dvenc.c
+dxa.c
+eacdata.c
+electronicarts.c
+ffmdec.c
+ffmenc.c
+ffmetadec.c
+ffmetaenc.c
+file.c
+filmstripdec.c
+filmstripenc.c
+flacdec.c
+flacenc.c
+flacenc_header.c
+flic.c
+flvdec.c
+flvenc.c
+framecrcenc.c
+g723_1.c
+g729dec.c
+gif.c
+gsmdec.c
+gxf.c
+gxfenc.c
+h261dec.c
+h263dec.c
+h264dec.c
+icodec.c
+id3v1.c
+id3v2.c
+id3v2enc.c
+idcin.c
+idroqdec.c
+idroqenc.c
+iff.c
+img2.c
+ingenientdec.c
+ipmovie.c
+isom.c
+iss.c
+iv8.c
+ivfdec.c
+ivfenc.c
+jvdec.c
+latmenc.c
+lmlm4.c
+loasdec.c
+lxfdec.c
+m4vdec.c
+matroska.c
+matroskadec.c
+matroskaenc.c
+md5enc.c
+md5proto.c
+metadata.c
+microdvddec.c
+microdvdenc.c
+mkvtimestamp_v2.c
+mm.c
+mmf.c
+mov.c
+mov_chan.c
+movenc.c
+movenchint.c
+mp3dec.c
+mp3enc.c
+mpc.c
+mpc8.c
+mpeg.c
+mpegenc.c
+mpegts.c
+mpegtsenc.c
+mpegvideodec.c
+mpjpeg.c
+msnwc_tcp.c
+mtv.c
+mvi.c
+mxf.c
+mxfdec.c
+mxfenc.c
+mxg.c
+ncdec.c
+nsvdec.c
+nullenc.c
+nut.c
+nutdec.c
+nutenc.c
+nuv.c
+oggdec.c
+oggenc.c
+oggparsecelt.c
+oggparsedirac.c
+oggparseflac.c
+oggparseogm.c
+oggparseskeleton.c
+oggparsespeex.c
+oggparsetheora.c
+oggparsevorbis.c
+oma.c
+omadec.c
+omaenc.c
+options.c
+os_support.c
+pcm.c
+pcmdec.c
+pcmenc.c
+pmpdec.c
+psxstr.c
+pva.c
+qcp.c
+r3d.c
+rawdec.c
+rawenc.c
+rawvideodec.c
+riff.c
+rl2.c
+rm.c
+rmdec.c
+rmenc.c
+rpl.c
+rso.c
+rsodec.c
+rsoenc.c
+rtp.c
+rtpenc.c
+rtpenc_aac.c
+rtpenc_amr.c
+rtpenc_chain.c
+rtpenc_h263.c
+rtpenc_h264.c
+rtpenc_latm.c
+rtpenc_mpv.c
+rtpenc_vp8.c
+rtpenc_xiph.c
+sauce.c
+sbgdec.c
+sdp.c
+seek.c
+segafilm.c
+segment.c
+sierravmd.c
+siff.c
+smacker.c
+smjpeg.c
+smjpegdec.c
+smjpegenc.c
+sol.c
+soxdec.c
+soxenc.c
+spdif.c
+spdifdec.c
+spdifenc.c
+srtdec.c
+swfdec.c
+swfenc.c
+thp.c
+tiertexseq.c
+tmv.c
+tta.c
+tty.c
+txd.c
+utils.c
+vc1test.c
+vc1testenc.c
+voc.c
+vocdec.c
+vocenc.c
+vorbiscomment.c
+vqf.c
+wav.c
+wc3movie.c
+westwood_aud.c
+westwood_vqa.c
+wtv.c
+wtvdec.c
+wtvenc.c
+wv.c
+xa.c
+xmv.c
+xwma.c
+yop.c
+yuv4mpeg.c
+#gopher.c
+#http.c
+#httpauth.c
+#rdt.c
+#rtmppkt.c
+#rtmpproto.c
+#rtpdec.c
+#rtpdec_amr.c
+#rtpdec_asf.c
+#rtpdec_h263.c
+#rtpdec_h264.c
+#rtpdec_xiph.c
+#rtpproto.c
+#rtsp.c
+#rtspenc.c
+#tcp.c
+#udp.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ffmpeg/ffmpeg.dec
+  StdLib/StdLib.dec
+
+
+[LibraryClasses]
+  MemoryAllocationLib
+  DevicePathLib
+  BaseLib
+  UefiBootServicesTableLib
+#  UefiDriverEntryPoint
+  BaseMemoryLib
+  DebugLib
+  UefiLib
+  PcdLib
+  UefiRuntimeServicesTableLib
+  PrintLib
+
+[Protocols]
+  gEfiDevicePathProtocolGuid                                            ## SOMETIMES_CONSUMES
+  gEfiHiiStringProtocolGuid                                             ## PRODUCES
+  gEfiHiiImageProtocolGuid |gEfiMdeModulePkgTokenSpaceGuid.PcdSupportHiiImageProtocol                  ## PRODUCES
+  gEfiHiiConfigRoutingProtocolGuid                                      ## PRODUCES
+  gEfiHiiDatabaseProtocolGuid                                           ## PRODUCES
+  gEfiHiiFontProtocolGuid                                               ## PRODUCES
+  gEfiHiiConfigAccessProtocolGuid                                       ## CONSUMES
+
+[FeaturePcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSupportHiiImageProtocol
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+
+[Guids]  
+  gEfiGlobalVariableGuid  ## SOMETIMES_CONSUMES ## Variable:"PlatformLang"
+  ##
+  # Event registered to EFI_HII_SET_KEYBOARD_LAYOUT_EVENT_GUID group,
+  # which will be triggered by EFI_HII_DATABASE_PROTOCOL.SetKeyboardLayout().
+  ##
+  gEfiHiiKeyBoardLayoutGuid  ## SOMETIME_CONSUMES  ## Event
+
+[Depex]
+  TRUE
+
+[BuildOptions]
+#   GCC:*_*_IA32_DLINK_FLAGS == -o "$(BIN_DIR)/SecMain" -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 /usr/lib/crt1.o /usr/lib/crti.o -L/usr/X11R6/lib -lXext -lX11 /usr/lib/crtn.o
+#   GCC:*_*_*_DLINK2_FLAGS == -lc
+   GCC:*_*_IA32_CC_FLAGS = -DARCH_X86_32=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 
+   GCC:*_*_X64_CC_FLAGS = -DARCH_X86_64=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 
+#   GCC:*_*_IA32_PP_FLAGS == -m32 -E -x assembler-with-cpp -include AutoGen.h
+#   GCC:*_*_IA32_ASM_FLAGS == -m32 -c -x assembler -imacros AutoGen.h
+
+#   GCC:*_*_X64_DLINK_FLAGS == -o "$(BIN_DIR)/SecMain" -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 /usr/lib/crt1.o /usr/lib/crti.o -L/usr/X11R6/lib -lXext -lX11 /usr/lib/crtn.o
+#   GCC:*_*_X64_CC_FLAGS == -m64 -g -fshort-wchar -fno-strict-aliasing -Wall -malign-double -idirafter/usr/include -c -include AutoGen.h
+#   GCC:*_*_X64_PP_FLAGS == -m64 -E -x assembler-with-cpp -include AutoGen.h
+#   GCC:*_*_X64_ASM_FLAGS == -m64 -c -x assembler -imacros AutoGen.h
+
+
+

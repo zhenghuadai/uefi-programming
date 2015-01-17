@@ -1,0 +1,23 @@
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = BSmem 
+  FILE_GUID                    = 4ea97c46-7491-4dfd-b442-747010f3ce5f
+  MODULE_TYPE                   = UEFI_APPLICATION
+  VERSION_STRING               = 0.1
+  ENTRY_POINT                    = UefiMain 
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF
+#
+[Sources]
+  BSmem.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]   
+  UefiApplicationEntryPoint
+  UefiLib
+  DebugLib
+
+[BuildOptions]  
+  MSFT:*_*_IA32_CC_FLAGS = /wd4305 

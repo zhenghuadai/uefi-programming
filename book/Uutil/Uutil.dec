@@ -1,0 +1,36 @@
+## @file
+#
+# This is the Unix Emulation Environment Platform
+#
+# Reference platform implementation using an emulator.
+# Copyright (c) 2008 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#    This program and the accompanying materials are licensed and made available 
+#    under the terms and conditions of the BSD License which accompanies this distribution.
+#    The full text of the license may be found at http://opensource.org/licenses/bsd-license.php
+#    THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+#    OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = EdkUtilPkg
+  PACKAGE_GUID                   = e2805c44-8985-11db-9e98-0040d0c0d0cd
+  PACKAGE_VERSION                = 1.0
+
+[Includes]
+  Include 
+
+[Includes.IA32]
+[LibraryClasses]
+
+[Guids]
+[Ppis]
+
+[Protocols]
+
+[PcdsFixedAtBuild]
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+ 
+[PcdsDynamic, PcdsDynamicEx]

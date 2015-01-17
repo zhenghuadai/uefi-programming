@@ -1,0 +1,63 @@
+## @file
+#   A simple, basic, application showing how the Hello application could be
+#   built using the "Standard C Libraries" from StdLib.
+#
+#  Copyright (c) 2010 - 2011, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = ffdecoder
+  FILE_GUID                      = 33a97c46-7491-4dfd-b442-74798713ce5f
+  #ENTRY_POINT                    = ShellCEntryLib
+  #MODULE_TYPE                    = UEFI_APPLICATION 
+  VERSION_STRING                 = 0.1
+  MODULE_TYPE                    = UEFI_DRIVER 
+  ENTRY_POINT                    = InitFFdecoder 
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF
+#
+
+[Sources]
+  ffdecoder.c 
+  math.c
+  InitShell.c
+[Packages]
+  StdLib/StdLib.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ShellPkg/ShellPkg.dec
+  ffmpeg/ffmpeg.dec
+  StdLibPrivateInternalFiles/DoNotUse.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  LibC
+  LibStdio
+  LibMath
+  LibString
+  BsdSocketLib
+  EfiSocketLib
+  UseSocketDxe
+  DevShell
+  zlib
+  libavcodec
+  libavutil
+  libswscale
+  libavformat
+
+  LibUefi
+  LibNetUtil
+
+[BuildOptions]
+   #GCC:*_*_*_CC_FLAGS = -DHAVE_FFMPEG_HEADER -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 
+   GCC:*_*_IA32_CC_FLAGS =  -DARCH_X86_32=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 
+   GCC:*_*_X64_CC_FLAGS = -DARCH_X86_64=1 -D__UEFI__ -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DHAVE_AV_CONFIG_H -std=c99 -fomit-frame-pointer -Wno-cast-qual -Wno-traditional-conversion -Wno-sign-conversion -Wno-pointer-sign -w 

@@ -1,0 +1,63 @@
+## @file
+# The DXE driver produces HII protocols defined in UEFI HII 2.1 specificatin.
+#
+# Copyright (c) 2007 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials       
+#  are licensed and made available under the terms and conditions of the BSD License   
+#  which accompanies this distribution. The full text of the license may be found at  
+#  http://opensource.org/licenses/bsd-license.php           
+#  
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,      
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = libGui
+  FILE_GUID                      = 348C4D62-BFBD-4882-9ECE-C80BB1C64336
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = BASE 
+  LIBRARY_CLASS                  = GUILib 
+  
+  DEFINE   UEFI_BOOK_DIR         = uefi/book
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  UGui.cpp
+  fb.cpp
+  bmp.cpp
+  Util.cpp
+[Packages]
+  StdLib/StdLib.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ShellPkg/ShellPkg.dec
+  $(UEFI_BOOK_DIR)/CppPkg/CppPkg.dec
+  $(UEFI_BOOK_DIR)/GUIPkg/GUIPkg.dec
+
+[LibraryClasses]
+  UefiBootServicesTableLib
+  UefiLib
+
+[Protocols]
+  gEfiSimpleTextInputExProtocolGuid
+
+[FeaturePcd]
+
+[Pcd]
+
+[Guids]  
+
+[Depex]
+  TRUE
+
+[BuildOptions]
+   MSFT:*_*_*_CC_FLAGS =  /wd4804 /wd4201 

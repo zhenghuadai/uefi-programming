@@ -1,0 +1,62 @@
+<html>
+    <head>
+    </head>
+    <body>
+        Text:
+        <canvas id="a" width="32" height="32"></canvas>
+        <script type="text/javascript">
+            var a_canvas = document.getElementById("a");
+            var context = a_canvas.getContext("2d");
+            const FW = 16;
+            const FH = 19;
+            context.strokeRect(10,   10, FW, FH);
+            context.font = "bold 15px times new roman"
+            context.fillstyle='#00f';
+            var fontstr="{<BR>";
+            //for(i=0x4e00; i< 0x4fa5;i++){
+            function formatHH(x){
+                var l = x.length;
+                var s = x;
+                if (l == 1)
+                    s = "0" + x;
+                return s;
+            }
+            for(i=0x4e00; i< 0x9fa5;i++){
+                context.clearRect(10,   10, FW, FH);
+                context.fillText(String.fromCharCode(i), 10, 10+FW);
+                var bitmapimg = context.getImageData(10,10, FW,FH);
+                //var bitmapimg = context.getImageData(0,0, 32,32);
+                var bitmap = bitmapimg.data;
+                //document.write(bitmap.length+"<BR>");
+                //for(var b = 0; b< bitmap.length; b++)
+                //    document.write(" " + bitmap[b] );
+                    var left = " ";
+                    var right = " ";
+                for( row =0;row <19; row++){
+                    var a = 0;
+                    for(col =0; col <8; col ++){
+                        if(bitmap[row * 16 *4 + col*4 +3] >10)
+                            a = (a<<1) | 1;
+                        else
+                            a = a<< 1
+                    }
+                    left = left + "0x" + formatHH(a.toString(16)) ;
+                    if(row <18) left = left + ",";
+                    a = 0;
+                    for(;col<16; col++){
+                        if(bitmap[row * 16 *4 + col*4+3] >10)
+                            a = (a<<1) | 1;
+                        else
+                            a = a<< 1;
+
+                    }
+                    right = right + "0x" + formatHH(a.toString(16)) ; 
+                    if(row <18) right= right+ ",";
+                }
+                fontstr = fontstr + "{ 0x"+ i.toString(16) + ", 0x00, " + "{" +  left +"}, {" + right +"}, {0x00,0x00,0x00} },"+ "<BR>";
+            }
+fontstr = fontstr + "{ 0x00, 0x00, { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}} <BR> };"
+document.write(fontstr);
+</script>
+    </body>
+</html>
