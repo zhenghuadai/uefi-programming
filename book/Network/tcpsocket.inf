@@ -14,7 +14,7 @@
 
 [Packages]
   MdePkg/MdePkg.dec
-  uefi/sstd/sstd.dec
+  uefi/book/sstdPkg/sstd.dec
 
 [LibraryClasses]   
   UefiApplicationEntryPoint
