@@ -116,7 +116,7 @@
   #
   # Book
   #
-  sstdLib|$(UEFI_BOOK_DIR)/sstd/Library/sstdLib.inf
+  sstdLib|$(UEFI_BOOK_DIR)/sstdPkg/Library/sstdLib.inf
   
 [LibraryClasses.common.USER_DEFINED]
   DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
