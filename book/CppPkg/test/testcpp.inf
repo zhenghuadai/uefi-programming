@@ -25,7 +25,7 @@
 
 [Sources]
   #crtend.c
-  testcpp.cpp 
+  testcpp.cpp | GCC 
 
 [Packages]
   MdePkg/MdePkg.dec
@@ -44,5 +44,5 @@
 
 [BuildOptions]
    GCC:*_*_IA32_CC_FLAGS =  
-   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4068
+   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4068 /wd4164
 

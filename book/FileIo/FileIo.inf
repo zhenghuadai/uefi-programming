@@ -19,7 +19,7 @@
 [Packages]
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  uefi/Uutil/Uutil.dec
+  uefi/book/Uutil/Uutil.dec
   ShellPkg/ShellPkg.dec
   
 

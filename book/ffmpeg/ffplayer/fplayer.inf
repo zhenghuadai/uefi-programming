@@ -48,5 +48,5 @@
   gEfiSimplePointerProtocolGuid
   gEfiSimpleTextInputExProtocolGuid
 [BuildOptions]
-   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4201 
+   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4201 /wd4164
 

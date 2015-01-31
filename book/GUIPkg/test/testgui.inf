@@ -61,5 +61,5 @@
   gEfiSimpleTextInputExProtocolGuid
 [BuildOptions]
    #GCC:*_*_IA32_CC_FLAGS = -D__UEFI__ 
-   MSFT:*_*_*_CC_FLAGS = -DEFI_SHELL_FILE_PROTOCOL -DUSE_SIMPLE_STDIO /GL- /wd4804 /wd4201 /Oi- /FAs /Od 
+   MSFT:*_*_*_CC_FLAGS = -DEFI_SHELL_FILE_PROTOCOL -DUSE_SIMPLE_STDIO /GL- /wd4804 /wd4201 /Oi- /FAs /Od /wd4164
 

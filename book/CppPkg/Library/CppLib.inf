@@ -60,4 +60,4 @@
   TRUE
 
 [BuildOptions]
-   MSFT:*_*_*_CC_FLAGS = /wd4804
+   MSFT:*_*_*_CC_FLAGS = /wd4804 /wd4164
