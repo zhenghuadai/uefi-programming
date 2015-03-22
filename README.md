@@ -14,6 +14,7 @@
 <div class="vt" id="wikicorrection">
 <h1><a name='Correction'>勘误</a></h1>
 <p><a title="感谢robin.xu" rel="nofollow">第7页 （2）SEC阶段执行流程</a><br> <font color="#555555">原文</font> ：2）从实模式转换到32位平坦模式（包含模式）<br> <font color="#555555">修订</font> ：2）从实模式转换到<strong><font color="#ff0000">保护模式、32位平坦内存模型</font></strong><br> </p><p><a title="感谢robin.xu" rel="nofollow">第15页，2.1.2 配置EDK2 开发环境</a><br> <font color="#555555">原文</font> ：C:\&gt; EDK2Edksetup.bat<br> <font color="#555555">修订</font> ：<strong><font color="#ff0000">C:\EDK2&gt;</font></strong> Edksetup.bat  </p><p></p><div>第221页，6）执行如下命令播放视频</div> <font color="#555555">原文</font> ：<tt>fs0:&gt; testc.efi piano 2.wav</tt><br> <font color="#555555">修订</font> ：<tt>fs0:&gt; testc.efi</tt><font color="#ff0000"> <strong><tt>piano.wav</tt></strong></font><br>  <p></p><p></p><br><div>第221页，6）执行如下命令播放视频</div> <font color="#555555">原文</font> ：“testac.efi piano2.wav”命令将会播放当前目录下的音频文件piano2.wav。<br> <font color="#555555">修订</font> ：“testac.efi <font color="#ff0000">piano.wav</font>”命令将会播放当前目录下的音频文件<font color="#ff0000"><tt>piano.wav</tt></font>。<br>
+<br>
 <p>
 <a title="感谢kurtqiao" rel="nofollow0">第278页</a><br />
 <font color="#555555">原文</font> ：Print(L"字体<font color="#ff0000"><b>加载</b></font>成功");<br />
