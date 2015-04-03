@@ -28,4 +28,4 @@
   $(UEFI_BOOK_DIR)/GUIPkg/test/testgui.inf
 
 [Components.X64]
-  $(UEFI_BOOK_DIR)/audio/testac97.in
+  $(UEFI_BOOK_DIR)/audio/testac97.inf
