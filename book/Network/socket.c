@@ -107,12 +107,12 @@ int Socket()
         NULL,
         (VOID **)&pTcpServiceBinding );
     if(EFI_ERROR(Status))
-        return Status;
+        return (int)Status;
 
     Status = pTcpServiceBinding->CreateChild ( pTcpServiceBinding,
         &this->m_SocketHandle );
     if(EFI_ERROR(Status))
-        return Status;
+        return (int)Status;
 
     Status = gBS->OpenProtocol ( this->m_SocketHandle,
         &gEfiTcp4ProtocolGuid,
@@ -121,7 +121,7 @@ int Socket()
         this->m_SocketHandle,
         EFI_OPEN_PROTOCOL_BY_HANDLE_PROTOCOL );
     if(EFI_ERROR(Status))
-         return Status;
+         return (int)Status;
     Initialize(myfd);
     return myfd;
 }

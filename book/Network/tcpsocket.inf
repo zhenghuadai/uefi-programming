@@ -8,6 +8,8 @@
 #
 #  VALID_ARCHITECTURES           = IA32 X64 IPF
 #
+[Sources.X64]
+  memcpy.c
 [Sources]
   Main.c
   socket.c
@@ -24,4 +26,4 @@
   gEfiTcp4ServiceBindingProtocolGuid
   gEfiTcp4ProtocolGuid
 [BuildOptions]  
-
+    MSFT:*_*_X64_CC_FLAGS     =/GL- 
