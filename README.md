@@ -11,6 +11,7 @@
 </blockquote><li>编译<tt>Nt32Pkg</tt> </li><ul><li>将<tt>uefi\book\Nt32Pkg\Nt32Pkg-2.4.inc</tt>文件添加到<tt>Nt32Pkg\Nt32Pkg.dsc</tt>末尾 </li><ul><li><tt>type uefi\book\Nt32Pkg\Nt32Pkg-2.4.inc &gt;&gt; Nt32Pkg\Nt32Pkg.dsc</tt> </li></ul><li>在命令行执行 </li><ul><li><tt> build -p Nt32Pkg\Nt32Pkg.dsc</tt> </li></ul></ul><li>编译<tt>AppPkg</tt> </li><ul><li>将<tt>uefi\book\AppPkg\AppPkg-2.4.inc</tt>文件添加到<tt>AppPkg\AppPkg.dsc</tt>末尾 </li><ul><li><tt>type uefi\book\AppPkg\AppPkg-2.4.inc &gt;&gt; AppPkg\AppPkg.dsc</tt> </li><li><tt> build -p AppPkg\AppPkg.dsc</tt> </li></ul></ul></ul>
  </div>
  
+<h1><a name='Correction'>勘误</a></h1>
 <div id="wikicontent">
 <div class="vt" id="wikimaincol">
 <p><a title="感谢robin.xu" rel="nofollow0">第7页 （2）SEC阶段执行流程</a><br />
