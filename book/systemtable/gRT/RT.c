@@ -62,11 +62,21 @@ EFI_STATUS UefiMain (
             // 到达变量数据库末尾时退出循环
             break;
         }
-        Print(L"%s\n",  FoundVarName);
+        Print(L"%s:\n",  FoundVarName);
         //找到一个新的变量，读取该变量的值和属性。
+        DataBufferSize = INIT_DATA_BUFFER_SIZE;// 1024
         DataSize  = DataBufferSize;
         Status    = gRT->GetVariable (FoundVarName, &FoundVarGuid, &Atts, &DataSize, DataBuffer);
         if (Status == EFI_BUFFER_TOO_SMALL) {
+            Print(L"EFI_BUFFER_TOO_SMALL\n");
+        }else{
+            UINTN ii = 0;
+            UINTN LL = DataSize / sizeof(CHAR16);
+            CHAR16* pp = (CHAR16*)DataBuffer;
+            for(;ii<LL; ii++){
+                Print(L"%c",pp[ii]); 
+            }
+            Print(L"\n");
         }
     }// End for(;;)
 

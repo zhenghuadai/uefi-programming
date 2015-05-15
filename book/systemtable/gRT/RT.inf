@@ -18,6 +18,8 @@
   UefiApplicationEntryPoint
   UefiBootServicesTableLib
   UefiRuntimeServicesTableLib
+  UefiLib
+  MemoryAllocationLib
 
 [BuildOptions]  
 
