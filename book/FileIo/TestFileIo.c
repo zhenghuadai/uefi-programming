@@ -348,7 +348,7 @@ EFI_STATUS TestAsyncWrite(EFI_FILE_PROTOCOL* File)
     return Status;
 }
 
-VOID ReadNotification(EFI_EVENT event, VOID* Context)
+VOID EFIAPI ReadNotification(EFI_EVENT event, VOID* Context)
 {
     EFI_FILE_IO_TOKEN *ReadToken = (EFI_FILE_IO_TOKEN *)Context;
     // ºÏ≤ÈReadToken.Status;
@@ -450,7 +450,8 @@ EFI_STATUS TestVar(CONST CHAR16* var)
 
 }
 
-EFI_STATUS UefiMain(
+EFI_STATUS EFIAPI
+UefiMain(
         IN EFI_HANDLE           ImageHandle,
         IN EFI_SYSTEM_TABLE     *SystemTable
         )
