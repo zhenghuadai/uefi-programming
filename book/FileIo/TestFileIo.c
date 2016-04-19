@@ -11,7 +11,7 @@
 #include <Protocol/SimpleTextInEx.h>
 #include <Protocol/SimpleFileSystem.h>
 #include <Protocol/EfiShell.h>
-#include <guid/FileInfo.h>
+#include <Guid/FileInfo.h>
 #include <Uutil.h>
 
 EFI_STATUS TestOpen()
