@@ -14,7 +14,7 @@ ShellAppMain (
 	EFI_STATUS RStatus = 0;	
 	EFI_SHELL_PROTOCOL            *mEfiShellProtocol;
 	CHAR16* Environment[] = { L"Var1=1", L"Var2=2", 0};
-	Status = gBS -> LocateProtocol( &gEfiShellProtocolGuid, NULL, &mEfiShellProtocol);
+	Status = gBS -> LocateProtocol( &gEfiShellProtocolGuid, NULL, (VOID**)&mEfiShellProtocol);
 	Status = mEfiShellProtocol -> Execute(&gImageHandle, L"-nomap ls fs0:",  NULL, &RStatus);
 	Print(L"Execute return %r with Status %d\n", Status, RStatus);
 	Status = mEfiShellProtocol -> Execute(&gImageHandle, L"-nomap -noversion -nostartup exit 1",  NULL, &RStatus);

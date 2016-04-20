@@ -17,7 +17,7 @@ EFI_STATUS    TestMMap()
     if(Status != EFI_BUFFER_TOO_SMALL){
         return Status;
     }
-    Status = gBS->AllocatePool(EfiBootServicesData, MemoryMapSize, &MemoryMap);
+    Status = gBS->AllocatePool(EfiBootServicesData, MemoryMapSize, (void**)&MemoryMap);
     Status = gBS->GetMemoryMap(&MemoryMapSize, MemoryMap, &MapKey, &DescriptorSize, &DescriptorVersion);
     for( i = 0; i< MemoryMapSize / (DescriptorSize); i++)
     {
