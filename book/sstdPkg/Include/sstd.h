@@ -4,9 +4,9 @@
 extern "C"{
 #endif
 
-#include <Library\MemoryAllocationLib.h>
-#include <Library\BaseMemoryLib.h>
-#include <Library\BaseLib.h>
+#include <Library/MemoryAllocationLib.h>
+#include <Library/BaseMemoryLib.h>
+#include <Library/BaseLib.h>
 
 #define malloc(size)               AllocatePool ((UINTN) size)
 #define free(ptr)                  FreePool(ptr)
