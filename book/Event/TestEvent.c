@@ -47,7 +47,13 @@ void WaitKey()
     EFI_INPUT_KEY  Key;
 
     Status = gBS->WaitForEvent(1, &gST->ConIn->WaitForKey, &Index);
-    Status = gST->ConIn->ReadKeyStroke (gST->ConIn, &Key); 
+    if (EFI_ERROR(Status)) {
+        Print(L"WaitKey: WaitForEvent Error!\n");
+    }
+    Status = gST->ConIn->ReadKeyStroke (gST->ConIn, &Key);
+    if (EFI_ERROR(Status)) {
+        Print(L"WaitKey: ReadKeyStroke Error!\n");
+    }
 }
 
 /** example 2
@@ -110,6 +116,10 @@ EFI_STATUS TestNotify()
     Status = gBS->CreateEvent(EVT_NOTIFY_WAIT, TPL_NOTIFY, (EFI_EVENT_NOTIFY)myEventNoify , (VOID*)NULL, &myEvent);
     Status = gBS->WaitForEvent(1, &myEvent, &index);
     Status = gBS->CloseEvent(myEvent);
+
+    if (EFI_ERROR(Status)) {
+        return Status;
+    }
     return EFI_SUCCESS;
 }
 
@@ -134,10 +144,19 @@ EFI_STATUS TestEventSingal()
     Print(L"Test EVT_TIMER | EVT_NOTIFY_SIGNAL");
     // 生成Timer事件，并设置触发函数
     Status = gBS->CreateEvent(EVT_TIMER | EVT_NOTIFY_SIGNAL, TPL_CALLBACK, (EFI_EVENT_NOTIFY)myEventNoify30, (VOID*)L"Hello! Time Out!", &myEvent);
+    if (EFI_ERROR(Status)) {
+        Print(L"TestEventSignal: CreateEvent error %d!\n", Status);
+    }
     // 设置Timer等待时间为10秒，属性为循环等待
     Status = gBS->SetTimer(myEvent,TimerPeriodic , 10 * 1000 * 1000);
+    if (EFI_ERROR(Status)) {
+        Print(L"TestEventSignal: SetTimer error %d!\n", Status);
+    }
     WaitKey();
     Status = gBS->CloseEvent(myEvent);
+    if (EFI_ERROR(Status)) {
+        Print(L"TestEventSignal: CloseEvent error %d!\n", Status);
+    }
     return EFI_SUCCESS;
 }
 
@@ -159,6 +178,9 @@ testMouseSimple()
             NULL,
             (VOID**)&mouse
             );
+    if (EFI_ERROR(Status)) {
+        Print(L"testMouseSimple: LocateProtocol error %d!\n", Status);
+    }
     // 重置鼠标设备
     Status = mouse->Reset(mouse, TRUE);
     // 将鼠标事件放到等待事件数组

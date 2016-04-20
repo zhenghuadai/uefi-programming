@@ -15,6 +15,10 @@ UefiMain (
     //¶ÁÈ¡¼üÅÌ
     gBS->WaitForEvent(1, &gST->ConIn->WaitForKey, &Index);
     Status = gST->ConIn->ReadKeyStroke (gST->ConIn, &Key);
+	if (EFI_ERROR(Status)) {
+		gST->ConOut->OutputString(gST->ConOut, L"ReadKeyStroke error.\n");
+		return Status;
+	}
     StrBuffer[0] = Key.UnicodeChar;
     StrBuffer[1] = '\n';
     gST -> ConOut-> OutputString(gST ->ConOut, StrBuffer); 

@@ -13,6 +13,9 @@ UefiMain (
     //¶ÁÈ¡¼üÅÌ
     SystemTable->BootServices->WaitForEvent(1, &SystemTable ->ConIn->WaitForKey, &Index);
     Status = SystemTable ->ConIn->ReadKeyStroke (SystemTable->ConIn, &Key);
+	if (EFI_ERROR(Status)) {
+		SystemTable->ConOut->OutputString(SystemTable->ConOut, L"Error reading key stroke!\n");
+	}
     StrBuffer[0] = Key.UnicodeChar;
     StrBuffer[1] = '\n';
     SystemTable -> ConOut-> OutputString(SystemTable->ConOut, StrBuffer); 
