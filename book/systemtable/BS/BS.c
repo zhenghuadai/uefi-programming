@@ -1,7 +1,8 @@
 #include <Uefi.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/DebugLib.h>
-    EFI_STATUS
+EFI_STATUS
+	EFIAPI
 UefiMain (
         IN EFI_HANDLE        ImageHandle,
         IN EFI_SYSTEM_TABLE  *SystemTable
@@ -17,12 +18,20 @@ UefiMain (
         CHAR16* vendor = SystemTable->FirmwareVendor;
         //输出固件供应商的名字
         SystemTable -> ConOut-> OutputString(SystemTable->ConOut, vendor);
-        _asm int 3;
+#ifdef _MSC_VER
+		_asm int 3;
+#else
+		asm("int $0x03");
+#endif
         // 取得当前的MapKey
         gBS->GetMemoryMap(&MemMapSize, MemMap, &MapKey, &DesSize, &DesVersion);
         // 结束Boot Services
         gBS->ExitBootServices(ImageHandle, MapKey);
-        _asm int 3;
+#ifdef _MSC_VER
+		_asm int 3;
+#else
+		asm("int $0x03");
+#endif
         ASSERT(SystemTable -> BootServices == NULL); 
 
         //SystemTable -> ConOut-> OutputString(SystemTable->ConOut, L"Crash!\n"); 

@@ -10,7 +10,7 @@ EFI_STATUS InitShellLib()
 {
 	if(gEfiShellProtocol == NULL)
 	{
-		gBS -> LocateProtocol(&gEfiShellProtocolGuid, NULL, &gEfiShellProtocol);
+		gBS -> LocateProtocol(&gEfiShellProtocolGuid, NULL, (VOID**)&gEfiShellProtocol);
 	}
 	if(gEfiShellParametersProtocol == NULL)
 	{
@@ -90,7 +90,7 @@ ShellAppMain (
 		IN CHAR16 **Argv
 	     )
 {
-	EFI_GUID   mStrPackageGuid = { 0xedd31def, 0xf262, 0xc24e, 0xa2, 0xe4, 0xde, 0xf7, 0xde, 0xcd, 0xcd, 0xee };
+	EFI_GUID   mStrPackageGuid = { 0xedd31def, 0xf262, 0xc24e, {0xa2, 0xe4, 0xde, 0xf7, 0xde, 0xcd, 0xcd, 0xee} };
 	//首先注册字符串资源文件：将我们的字符串package加入到Hii数据库中
 	EFI_HANDLE HiiHandle = HiiAddPackages (&mStrPackageGuid ,  gImageHandle, exampleStrings, NULL); 
 	//通过字符串标识符访问字符串。 

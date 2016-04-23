@@ -6,7 +6,9 @@
 #include <Library/UefiLib.h>
 #define INIT_NAME_BUFFER_SIZE  128
 #define INIT_DATA_BUFFER_SIZE  1024
-EFI_STATUS UefiMain (
+EFI_STATUS
+EFIAPI
+UefiMain (
         IN EFI_HANDLE        ImageHandle,
         IN EFI_SYSTEM_TABLE  *SystemTable
         )

@@ -25,6 +25,10 @@ testMouseSimple()
 			NULL,
 			(VOID**)&mouse
 			);
+	if (EFI_ERROR(Status)) {
+		Print(L"Error locating Simple Pointer Protocol.\n");
+		return Status;
+	}
 	// 重置鼠标设备
 	Status = mouse->Reset(mouse, TRUE);
 	// 将鼠标事件放到等待事件数组
@@ -56,7 +60,9 @@ testMouseSimple()
 	return EFI_SUCCESS;
 }
 
-EFI_STATUS UefiMain(
+EFI_STATUS
+EFIAPI
+UefiMain(
         IN EFI_HANDLE           ImageHandle,
         IN EFI_SYSTEM_TABLE     *SystemTable
 		)

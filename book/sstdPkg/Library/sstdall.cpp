@@ -1,11 +1,11 @@
 extern "C" {
 #include <Uefi.h>
-#include <Library\BaseLib.h>
+#include <Library/BaseLib.h>
 #undef NULL
 #define NULL 0
-typedef void (__cdecl *_PVFV)(void);
-typedef int  (__cdecl *_PIFV)(void);
-typedef void (__cdecl *_PVFI)(int); 
+typedef void (EFIAPI *_PVFV)(void);
+typedef int  (EFIAPI *_PIFV)(void);
+typedef void (EFIAPI *_PVFI)(int); 
 _PVFV *atexits  = (_PVFV*)NULL;
 int num_atexit = 0;
 int max_atexit =-1;
@@ -16,7 +16,7 @@ int max_atexit =-1;
 	 nonzero if it fails.
 **/
 int
-atexit(void (*handler)(void))
+atexit(_PVFV handler)
 {	
 	if(handler == NULL)
 		return 0;
@@ -38,7 +38,7 @@ atexit(void (*handler)(void))
 
 }
 
-extern  "C"  int __cdecl _purecall ( void ) 
+extern  "C"  int EFIAPI _purecall ( void ) 
 { 
     return  0 ; 
 }
