@@ -10,7 +10,8 @@
 #include <Protocol/SimplePointer.h>
 #include <Protocol/SimpleTextInEx.h>
 #include <Protocol/SimpleFileSystem.h>
-#include <Protocol/EfiShell.h>
+//#include <Protocol/EfiShell.h>
+#include <Protocol/Shell.h>
 #include <Guid/FileInfo.h>
 #include <Uutil.h>
 
@@ -45,7 +46,7 @@ EFI_STATUS TestOpen()
     {
         EFI_FILE_PROTOCOL *ReadMe = 0;
         Status = EfiDirectory ->Open(
-                EfiDirectory,    //This 指向目录\efi\ 
+                EfiDirectory,    //This 指向目录\efi 
                 &ReadMe,          //新文件的句柄   
                 (CHAR16*)L"readme.txt",  //文件全路径为\efi\readme.txt
                 EFI_FILE_MODE_CREATE | EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE,//创建并打开
@@ -58,7 +59,7 @@ EFI_STATUS TestOpen()
     {
         EFI_FILE_PROTOCOL *SystemFile = 0;
         Status = EfiDirectory ->Open(
-                EfiDirectory,     //This 指向目录 \efi\ 
+                EfiDirectory,     //This 指向目录 \efi  
                 & SystemFile,     //新文件句柄
                 (CHAR16*)L"..\\system", // 完整路径为 \efi\..\system
                 EFI_FILE_MODE_CREATE | EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE,//创建并打开
@@ -428,6 +429,7 @@ EFI_STATUS TestShellFile()
     Status = gEfiShellProtocol->ReadFile(FileHandle, &RbufSize ,Rbuf  ); 
     Status = gEfiShellProtocol->CloseFile(FileHandle);
  
+    (void)Status;
     return EFI_SUCCESS;
 
 }
@@ -446,6 +448,7 @@ EFI_STATUS TestVar(CONST CHAR16* var)
     Status = gEfiShellProtocol->WriteFile(FileHandle, &WbufSize, Wbuf);
     Status = gEfiShellProtocol->CloseFile(FileHandle); 
  
+    (void)Status;
     return EFI_SUCCESS;
 
 }

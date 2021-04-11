@@ -1,24 +1,6 @@
-## @file
-#   Intel(r) UEFI Application Development Kit for EDK II.
-#   This package contains applications which depend upon Standard Libraries
-#   from the StdLib package.
-#
-#   See the comments in the [LibraryClasses.IA32] and [BuildOptions] sections
-#   for important information about configuring this package for your
-#   environment.
-#
-#   Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>
-#   This program and the accompanying materials
-#   are licensed and made available under the terms and conditions of the BSD License
-#   which accompanies this distribution. The full text of the license may be found at
-#   http://opensource.org/licenses/bsd-license.
-#
-#   THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
-##
 
 [Defines]
-  PLATFORM_NAME                  = AppPkg
+  PLATFORM_NAME                  = UefiProgrammingPkg
   PLATFORM_GUID                  = 0458dade-8b6e-4e45-b773-1b27cbda3e06
   PLATFORM_VERSION               = 0.01
   DSC_SPECIFICATION              = 0x00010006
@@ -39,8 +21,6 @@
 [PcdsFeatureFlag]
 
 [PcdsFixedAtBuild]
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|$(DEBUG_PROPERTY_MASK)
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|$(DEBUG_PRINT_ERROR_LEVEL)
 
 [PcdsFixedAtBuild.IPF]
 
@@ -82,9 +62,9 @@
   HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
 
   ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
-  #FileHandleLib|ShellPkg/Library/UefiFileHandleLib/UefiFileHandleLib.inf
-  #SortLib|ShellPkg/Library/UefiSortLib/UefiSortLib.inf
-  PathLib|ShellPkg/Library/BasePathLib/BasePathLib.inf
+  FileHandleLib|MdePkg/Library/UefiFileHandleLib/UefiFileHandleLib.inf
+  SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
+  #PathLib|ShellPkg/Library/BasePathLib/BasePathLib.inf
 
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
 
@@ -114,16 +94,16 @@
 [Components]
 
 #### Sample Applications.
-  AppPkg/Applications/Hello/Hello.inf        # No LibC includes or functions.
-  AppPkg/Applications/Main/Main.inf          # Simple invocation. No other LibC functions.
-  AppPkg/Applications/Enquire/Enquire.inf    #
+  #AppPkg/Applications/Hello/Hello.inf        # No LibC includes or functions.
+  #AppPkg/Applications/Main/Main.inf          # Simple invocation. No other LibC functions.
+  #AppPkg/Applications/Enquire/Enquire.inf    #
 
   #$(UEFI_BOOK_DIR)/ffmpeg/ffplayer/fplayer.inf
   #$(UEFI_BOOK_DIR)/GcppPkg/test/testcpp.inf 
-  $(UEFI_BOOK_DIR)/std/main.inf
-  $(UEFI_BOOK_DIR)/infs/main/main.inf
+  ### StdLib ###
+  #$(UEFI_BOOK_DIR)/std/main.inf
+  #$(UEFI_BOOK_DIR)/infs/main/main.inf
 #### After extracting the Python distribution, un-comment the following line to build Python.
-#  AppPkg/Applications/Python/PythonCore.inf
 
 
 ##############################################################################
@@ -138,13 +118,17 @@
 #  Include Boilerplate text required for building with the Standard Libraries.
 #
 ##############################################################################
-  #!include StdLib/StdLib.inc
 #!include AppPkg/Applications/Sockets/Sockets.inc
-  $(UEFI_BOOK_DIR)/CppPkg/test/testcpp.inf
   $(UEFI_BOOK_DIR)/disk/DevicePath/TestDevicePath.inf
   $(UEFI_BOOK_DIR)/disk/AtaPassThru/TestPassThru.inf
   $(UEFI_BOOK_DIR)/audio/audio.inf
   $(UEFI_BOOK_DIR)/systemtable/memory/BSmem.inf
+  $(UEFI_BOOK_DIR)/FileIo/FileIo.inf
+  $(UEFI_BOOK_DIR)/Network/tcpsocket.inf
+  $(UEFI_BOOK_DIR)/mouse/mouse.inf
+  ####C++####
+  #$(UEFI_BOOK_DIR)/disk/disk.inf
+  #$(UEFI_BOOK_DIR)/CppPkg/test/testcpp.inf
 
 [Components.X64]
   $(UEFI_BOOK_DIR)/audio/testac97.inf

@@ -37,7 +37,7 @@ EFI_AUDIO_PROTOCOL* Audio;
 
 void playafile(char* fn)
 {
-    EFI_STATUS Status;
+	EFI_STATUS  Status = EFI_SUCCESS;
     UINTN BLOCK_SIZE = 65534 / 2 * 32;
     EFI_EVENT myEvent[2];
     WAV_HEADER* wavHeader = 0;
@@ -74,6 +74,7 @@ void playafile(char* fn)
         gBS->CloseEvent(myEvent[0]);
         freeWavHeader(wavHeader);
     }
+    (void)Status;
 }
 
 void playSample()
@@ -139,7 +140,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-#ifndef SEEK_SET
+#ifndef _STDLIB_H
 INTN
 EFIAPI
 ShellAppMain (
@@ -150,11 +151,11 @@ ShellAppMain (
 
     char FilenameA[32];
     if(Argc == 2){
-        UnicodeStrToAsciiStr(FilenameA, Argv[1]);
+        UnicodeStrToAsciiStrS(Argv[1],FilenameA, StrLen(Argv[1]) + 1);
         filename = FilenameA;
     }
     else 
         filename = "test.wav";
-    UefiMain(gImageHandle, gST);
+    return UefiMain(gImageHandle, gST);
 }
 #endif

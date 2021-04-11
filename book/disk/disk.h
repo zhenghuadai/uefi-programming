@@ -27,7 +27,7 @@ extern "C"
 
 
 #include <sstd.h>
-#include <uutil.h>
+#include <Uutil.h>
 #undef NULL
 #define NULL 0
  

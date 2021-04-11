@@ -1,0 +1,12 @@
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = UefiProgrammingPkg 
+  PACKAGE_GUID                   = E3E3D3D5-D62B-4497-A175-264F489D127E
+  PACKAGE_VERSION                = 0.02
+
+
+[Guids]
+
+
+[PcdsFixedAtBuild]

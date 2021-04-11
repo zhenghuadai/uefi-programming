@@ -11,7 +11,7 @@ extern "C"{
 #include <Library/UefiBootServicesTableLib.h>
 #include <Protocol/LoadedImage.h>
 #include <Protocol/EfiShellInterface.h> 
-#include <Protocol/EfiShellParameters.h>
+//#include <Protocol/EfiShellParameters.h>
 #include <Protocol/SimpleFileSystem.h>
 #include <Library/MemoryAllocationLib.h>
 
@@ -19,6 +19,10 @@ extern "C"{
 #define free(ptr)                  FreePool(ptr)
 
 typedef void FILE;
+#ifndef _SIZE_T
+typedef UINTN size_t;
+#define _SIZE_T
+#endif
 
 EFI_STATUS
 EFIAPI
@@ -47,7 +51,7 @@ static __inline FILE* fopen(CHAR8* filename, CHAR8* mode)
 
     if(gEfiShellProtocol == NULL) LocateShellProtocol();
     FilenameUnicode = (CHAR16*)malloc( ((AsciiStrLen (filename) + 1) * sizeof (CHAR16)));
-    AsciiStrToUnicodeStr(filename,FilenameUnicode);
+    AsciiStrToUnicodeStrS(filename,FilenameUnicode, (AsciiStrLen (filename) + 1));
     for(Index =0 ; Index <AsciiStrLen(mode); Index ++){
         switch (mode[Index])
         {
@@ -71,7 +75,7 @@ static __inline FILE* fcreate(CHAR8* filename, CHAR8* mode)
     CHAR16*                         FilenameUnicode;
 
     FilenameUnicode = (CHAR16*)malloc( ((AsciiStrLen (filename) + 1) * sizeof (CHAR16)));
-    AsciiStrToUnicodeStr(filename,FilenameUnicode);
+    AsciiStrToUnicodeStrS(filename,FilenameUnicode,(AsciiStrLen (filename) + 1));
     Status = gEfiShellProtocol->CreateFile((CONST CHAR16*)FilenameUnicode, EFI_FILE_MODE_WRITE, &LFileHandle);
     if(EFI_ERROR(Status)){
     }
@@ -79,24 +83,29 @@ static __inline FILE* fcreate(CHAR8* filename, CHAR8* mode)
     return LFileHandle;
 }
 
-static __inline size_t __cdecl fread(void* _Str,      size_t _ElementSize,   size_t _Count,   FILE* _File)
+//__cdecl 
+static __inline size_t fread(void* _Str,      size_t _ElementSize,   size_t _Count,   FILE* _File)
 {
     EFI_STATUS                      Status;
     UINTN                           BufSize =  _ElementSize * _Count;
     
     Status = gEfiShellProtocol->ReadFile(_File, &BufSize, _Str);
+    (void)Status;
     return BufSize;
 }
 
-static __inline size_t __cdecl fwrite( const void * _Str,   size_t _Size,   size_t _Count,   FILE* _File)
+//__cdecl 
+static __inline size_t fwrite( const void * _Str,   size_t _Size,   size_t _Count,   FILE* _File)
 {
     EFI_STATUS                      Status;
     UINTN                           BufSize =  _Size * _Count;
     Status = gEfiShellProtocol->WriteFile(_File, &BufSize,(void*) _Str);
+    (void)Status;
     return BufSize;
 }
 
-static __inline int __cdecl fclose(FILE* _File)
+//__cdecl 
+static __inline int fclose(FILE* _File)
 {
     EFI_STATUS                      Status;
     Status = gEfiShellProtocol->CloseFile(_File);
@@ -106,7 +115,8 @@ static __inline int __cdecl fclose(FILE* _File)
 #define SEEK_SET 0
 #define SEEK_CUR 1
 #define SEEK_END 2
-static __inline int __cdecl fseek( FILE * _File,   long _Offset,   int _Origin)
+//__cdecl 
+static __inline int fseek( FILE * _File,   long _Offset,   int _Origin)
 {
     EFI_STATUS                      Status;
     INTN                            Abs_Offset = (INTN)_Offset;

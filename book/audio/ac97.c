@@ -383,6 +383,8 @@ NTSTATUS PrimaryCodecReady (void)
         //KeDelayExecutionThread (KernelMode, FALSE, &WaitTime);
     } while (WaitCycles--);
 
+    (void)WaitTime; // avoid warning 
+
     DOUT (DBG_ERROR, ("PrimaryCodecReady timed out!"));
     return STATUS_IO_TIMEOUT;
 }
@@ -447,6 +449,8 @@ NTSTATUS PowerUpCodec (void)
         ntStatus = STATUS_DEVICE_NOT_READY;
     }
 
+    (void)WaitTime; // avoid warning 
+
     return ntStatus;
 }
 
@@ -503,11 +507,11 @@ void Play2(u32* p, u32 maxi )
 		Print(L" Pcm Out Volume :%d\n", data);
 	}
 
-	bds[0].addr = (u32)p;
+	bds[0].addr = (u32)(unsigned long)p;
 	bds[0].len = (u16)maxi;
 	bds[0].BUP = 1;
 	bds[0].IOC = 0;
-	WriteBMControlRegister32(PO_BDBAR       ,  (u32)bds);
+	WriteBMControlRegister32(PO_BDBAR       ,  (u32)(unsigned long)bds);
 	WriteBMControlRegister(PO_LVI         ,  0);
 
 	run();

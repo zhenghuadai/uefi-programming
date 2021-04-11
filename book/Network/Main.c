@@ -2,6 +2,7 @@
 #include <Library/UefiBootServicesTableLib.h>
 
 EFI_STATUS TestNetwork (IN EFI_HANDLE ImageHandle);
+EFIAPI
 EFI_STATUS
 UefiMain (
           IN EFI_HANDLE        ImageHandle,

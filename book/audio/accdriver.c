@@ -166,7 +166,7 @@ AUDIO_PRIVATE_DATA        gDiskIoPrivateDataTemplate = {
     0
   },
   NULL,
-  {0}
+  {{0}}
 };
 
 VOID
@@ -455,7 +455,7 @@ EFIAPI AC97Play(
     //Print(L"Size:%d\n", Size);
 	for( i=0; i< 32; i++, FramesLeft-=FRAMES_PER_BLOCK){
         if( (UINTN)i * FRAMES_PER_BLOCK >= Size/4) break;
-		Private->Bdes[i].addr = (u32)(PcmData + FRAMES_PER_BLOCK * 4 * i);
+		Private->Bdes[i].addr = (u32)(unsigned long)(PcmData + FRAMES_PER_BLOCK * 4 * i);
         Private->Bdes[i].len = (u16)(FramesLeft < FRAMES_PER_BLOCK?FramesLeft*2:FRAMES_PER_BLOCK*2);
         Private->Bdes[i].BUP = 0;
         Private->Bdes[i].IOC = 0;
@@ -465,7 +465,7 @@ EFIAPI AC97Play(
 	Private->Bdes[i-1].IOC = 0;
     Print(L"Bdes :%d; %0x len :%0x\n", i, Private->Bdes[0].addr, Private->Bdes[0].len);
 
-	WriteBMControlRegister32(PO_BDBAR       ,  (u32)(long)Private->Bdes);
+	WriteBMControlRegister32(PO_BDBAR       ,  (u32)(unsigned long)Private->Bdes);
 	WriteBMControlRegister(PO_LVI         ,  i-1);
     // Run = 1
 	WriteBMControlRegisterMask(PO_CR           , 1,1);

@@ -13,6 +13,7 @@
 #include <Protocol/AtaPassThru.h>
 #include <Uefi/UefiGpt.h>
 #include <Library/DevicePathLib.h>
+#include <Library/MemoryAllocationLib.h>
 
 EFI_ATA_PASS_THRU_PROTOCOL *AtaPassThroughProtocol;
 
@@ -21,6 +22,9 @@ EFI_STATUS ReadSectors(UINT16 Port, UINT16 PortMultiplierPort, UINT64 StartLba, 
 	EFI_STATUS Status;
     UINT32 IsExt = (StartLba > 0xFFFFFFFFFFFFFFFF);  
     EFI_ATA_PASS_THRU_COMMAND_PACKET Packet;
+    
+    ZeroMem(&Packet, sizeof(EFI_ATA_PASS_THRU_COMMAND_PACKET));
+    Packet.Acb = AllocatePool(sizeof(EFI_ATA_COMMAND_BLOCK));
 
     Packet.Protocol          = EFI_ATA_PASS_THRU_PROTOCOL_UDMA_DATA_IN;
     Packet.Acb->AtaCommand   = IsExt?  ATA_CMD_READ_DMA_EXT : ATA_CMD_READ_DMA ;
@@ -51,6 +55,7 @@ EFI_STATUS ReadSectors(UINT16 Port, UINT16 PortMultiplierPort, UINT64 StartLba, 
         PortMultiplierPort,
         &Packet,
         NULL);
+    FreePool(Packet.Acb);
     return Status;
 }
 

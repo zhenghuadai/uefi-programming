@@ -17,15 +17,15 @@
 [Sources]  
  disk.cpp 
  test.cpp
-  ..\..\GcppPkg\Library\GcppLib.cpp
-  ..\..\sstd\Library\sstdall.cpp
+ # ..\..\GcppPkg\Library\GcppLib.cpp
+ # ..\..\sstd\Library\sstdall.cpp
 
 [Packages]
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  uefi/sstd/sstd.dec
-  uefi/Uutil/Uutil.dec
+  uefi/book/sstdPkg/sstd.dec
+  uefi/book/Uutil/Uutil.dec
 
 [LibraryClasses]
   UefiApplicationEntryPoint

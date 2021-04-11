@@ -20,7 +20,7 @@
   MODULE_TYPE                    = UEFI_APPLICATION
   ENTRY_POINT                    = ShellCEntryLib
 
-  DEFINE UEFI_BOOK_DIR            = uefi\book
+  DEFINE UEFI_BOOK_DIR            = uefi/book
 
 
 [Sources]
@@ -37,8 +37,8 @@
   CppLib
   ShellCEntryLib
   PrintLib
-  LibC
-  LibStdio
+  #LibC
+  #LibStdio
 
 [Protocols]
 

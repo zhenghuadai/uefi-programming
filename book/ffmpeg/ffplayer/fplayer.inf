@@ -20,7 +20,7 @@
   VERSION_STRING                 = 0.1
   ENTRY_POINT                    = ShellCEntryLib
   
-  DEFINE UEFI_BOOK_DIR            = uefi\book
+  DEFINE UEFI_BOOK_DIR            = uefi/book
 
 #
 #  VALID_ARCHITECTURES           = IA32 X64 IPF

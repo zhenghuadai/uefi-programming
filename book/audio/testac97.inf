@@ -29,7 +29,7 @@
 [LibraryClasses]
   UefiApplicationEntryPoint
   UefiLib
-  LibC
+  #LibC
   ShellCEntryLib
   PcdLib
   DebugLib

@@ -219,6 +219,7 @@ static int Destroy(int sk)
 	    free(this->RecvToken.Packet.RxData);
 	    this->RecvToken.Packet.RxData = NULL;
     }
+    (void)Status;
     return 0;
 }
 

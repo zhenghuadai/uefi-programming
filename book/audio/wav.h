@@ -125,15 +125,19 @@ __inline void printWavHeader(WAV_HEADER* pHeader)
     printf("Data Size        :%d\n",pHeader->dmDataHeader.dwDataSize);
 }
 
+static
 __inline bool checkRiffHeader(RIFF_HEADER* pHeader){
     return ((pHeader-> dwRiffID == int_RIFF) &&(pHeader-> dwRiffFmt== int_WAVE));
 }
+static
 __inline bool checkFmtHeader(FMT_HEADER* pHeader){
     return (pHeader-> dwFmtID == int_fmt );
 }
+static
 __inline bool checkFactHeader(FACT_HEADER* pHeader){
     return (pHeader-> dwFactID == int_fact);
 }
+static
 __inline bool checkDataHeader(DATA_HEADER* pHeader){
     return (pHeader-> dwDataID == int_data);
 }
@@ -145,6 +149,7 @@ __inline bool checkDataHeader(DATA_HEADER* pHeader){
  *
  * @return WAV_HEADER* 
  */
+static // Add static to avoid compile warning: ‘fread' is static but used in inline function ‘writeWaveFile’ which is not static 
 __inline WAV_HEADER* readWaveFile(FILE* infp)
 {
     WAV_HEADER* pheader;
@@ -200,6 +205,7 @@ __inline WAV_HEADER* readWaveFile(FILE* infp)
  *
  * @return 
  */
+static
 __inline WAV_HEADER* readWaveFile2(char* infn)
 {
     FILE* fp= fopen(infn, "rb");
@@ -220,6 +226,7 @@ __inline WAV_HEADER* readWaveFile2(char* infn)
  *
  * @return 
  */
+static
 __inline int writeWaveFile(FILE* ofp, WAV_HEADER* pheader)
 {
     fwrite( &(pheader->dmRiffHeader), sizeof(RIFF_HEADER), 1, ofp);
@@ -233,6 +240,7 @@ __inline int writeWaveFile(FILE* ofp, WAV_HEADER* pheader)
     return 0;
 }
 
+static
 __inline int writeWaveFile2(char* ofn, WAV_HEADER* pheader)
 {
     FILE* fp= fopen(ofn, "w");
@@ -242,6 +250,7 @@ __inline int writeWaveFile2(char* ofn, WAV_HEADER* pheader)
     return ret;
 }
 
+static
 __inline void freeWavHeader(WAV_HEADER* wavHeader)
 {
     if (wavHeader->wavFact ) free(wavHeader->wavFact);
